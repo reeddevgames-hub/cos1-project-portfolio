@@ -10,7 +10,6 @@ public:
 
 		// This makes The options that will be in the menu an enum which can be easier to call later.
 	{
-		CreateAccount,
 		Deposit,
 		Withdraw,
 		Transfer,
@@ -24,13 +23,40 @@ private:
 	void DisplayMainMenu()
 	{
 		system("CLS");
+
+		// Display User Account Info. 
 		ConsoleUtil::WriteLine("===============================", Red);
-		ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Welcome To Energy Bank! ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
+		ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Your Current Account Information ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
+		ConsoleUtil::Write("Account Holder: ", Cyan); ConsoleUtil::WriteLine(acc_Reference.GetAccountHolderName(), Cyan);
+		ConsoleUtil::Write("Current Balance: $", Cyan); ConsoleUtil::WriteLine(std::to_string( acc_Reference.GetAccountBalance()), Green);
+		ConsoleUtil::WriteLine("===============================", Red);
+		ConsoleUtil::WriteLine();
+
+		// Display Main Menu. 
+		ConsoleUtil::WriteLine("1. Deposit Funds", Magenta);
+		ConsoleUtil::WriteLine("2. WithDraw Funds", Magenta);
+		ConsoleUtil::WriteLine("3. Transfer Money", Magenta);
+		ConsoleUtil::WriteLine("4. Exit Banking App", Magenta);
 	}
 
+	// Using Enum MenuOption class, makes a switch statement for each choice if chosen.
 	void HandleSelection(MenuOption option)
 	{
+		switch (option)
+		{
+		case MenuOption::Deposit:
 
+			break;
+		case MenuOption::Withdraw:
+			
+			break;
+		case MenuOption::Transfer:
+
+			break;
+		case MenuOption::Exit:
+
+			break;
+		}
 	}
 
 public:
@@ -69,11 +95,7 @@ public:
 			ConsoleUtil::Write("Please Enter Your Initial Deposit Amount: $", Cyan);
 			std::cin >> initial_Deposit;
 			acc_Reference.Deposit(initial_Deposit);
-
-
-
 		}
-
 		while (is_Running == true)
 		{
 
