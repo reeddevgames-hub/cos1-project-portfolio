@@ -47,9 +47,31 @@ public:
 		strcpy_s(holder_Name, 50, _name);
 	}
 
-	bool Deposit();
+	bool Deposit(double _balance)
+	{
+		if (_balance > 0)
+		{
+			total_Balance = _balance;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
-	bool Withdraw();
+	bool Withdraw(double _balance)
+	{
+		if (_balance > 0 && total_Balance >= _balance)
+		{
+			total_Balance -= _balance;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 };
 
