@@ -25,15 +25,15 @@ private:
 		system("CLS");
 
 		// Display User Account Info. 
-		ConsoleUtil::WriteLine("===============================", Red);
+		ConsoleUtil::WriteLine("========================================", Red);
 		ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Your Current Account Information ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
 		ConsoleUtil::Write("Account Holder: ", Cyan); ConsoleUtil::WriteLine(acc_Reference.GetAccountHolderName(), Cyan);
 		ConsoleUtil::Write("Current Balance: $", Cyan); ConsoleUtil::WriteLine(std::to_string( acc_Reference.GetAccountBalance()), Green);
-		ConsoleUtil::WriteLine("===============================", Red);
+		ConsoleUtil::WriteLine("========================================", Red);
 		ConsoleUtil::WriteLine();
 
 		// Display Main Menu. 
-		ConsoleUtil::WriteLine("===============================", Yellow);
+		ConsoleUtil::WriteLine("========================================", Yellow);
 		ConsoleUtil::Write("== ", Yellow); ConsoleUtil::Write(" Choose From a Menu Option Below. ", Magenta); ConsoleUtil::WriteLine(" ==", Yellow);
 		ConsoleUtil::WriteLine("0. Deposit Funds", Magenta);
 		ConsoleUtil::WriteLine("1. Withdraw Funds", Magenta);
@@ -76,6 +76,7 @@ private:
 
 		case MenuOption::Transfer:
 			ConsoleUtil::WriteLine("Transfer System Coming Soon...", Red);
+			system("pause");
 			break;
 
 		case MenuOption::Exit:
@@ -123,7 +124,11 @@ public:
 		}
 		while (is_Running == true)
 		{
-
+			DisplayMainMenu();
+			ConsoleUtil::Write("Enter Option: ", Magenta);
+			std::cin >> userInput;
+			std::cin.ignore();
+			HandleSelection((MenuOption)userInput);
 		}
 	}
 };

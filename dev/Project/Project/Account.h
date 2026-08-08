@@ -51,7 +51,7 @@ public:
 	{
 		if (_balance > 0)
 		{
-			total_Balance = _balance;
+			total_Balance += _balance;
 			return true;
 		}
 		else
