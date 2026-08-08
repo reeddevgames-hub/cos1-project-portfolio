@@ -35,10 +35,10 @@ private:
 		// Display Main Menu. 
 		ConsoleUtil::WriteLine("===============================", Yellow);
 		ConsoleUtil::Write("== ", Yellow); ConsoleUtil::Write(" Choose From a Menu Option Below. ", Magenta); ConsoleUtil::WriteLine(" ==", Yellow);
-		ConsoleUtil::WriteLine("1. Deposit Funds", Magenta);
-		ConsoleUtil::WriteLine("2. WithDraw Funds", Magenta);
-		ConsoleUtil::WriteLine("3. Transfer Money", Magenta);
-		ConsoleUtil::WriteLine("4. Exit Banking App", Magenta);
+		ConsoleUtil::WriteLine("0. Deposit Funds", Magenta);
+		ConsoleUtil::WriteLine("1. Withdraw Funds", Magenta);
+		ConsoleUtil::WriteLine("2. Transfer Money", Magenta);
+		ConsoleUtil::WriteLine("3. Exit Banking App", Magenta);
 	}
 
 	// Using enum MenuOption, makes a switch statement for each choice if chosen.
