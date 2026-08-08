@@ -1,5 +1,7 @@
 #pragma once
 #include "Account.h"
+#include<cstdlib>
+#include"ConsoleUtil.h"
 
 class MenuInterface
 {
@@ -18,9 +20,16 @@ public:
 private:
 	Account& acc_Reference;
 
-	void DisplayMainMenu();
+	void DisplayMainMenu()
+	{
+		system("CLS");
+		ConsoleUtil::WriteLine();
+	}
 
-	void HandleSelection(MenuOption option);
+	void HandleSelection(MenuOption option)
+	{
+
+	}
 
 public:
 
