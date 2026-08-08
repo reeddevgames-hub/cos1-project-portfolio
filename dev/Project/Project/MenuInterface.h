@@ -33,28 +33,53 @@ private:
 		ConsoleUtil::WriteLine();
 
 		// Display Main Menu. 
+		ConsoleUtil::WriteLine("===============================", Yellow);
+		ConsoleUtil::Write("== ", Yellow); ConsoleUtil::Write(" Choose From a Menu Option Below. ", Magenta); ConsoleUtil::WriteLine(" ==", Yellow);
 		ConsoleUtil::WriteLine("1. Deposit Funds", Magenta);
 		ConsoleUtil::WriteLine("2. WithDraw Funds", Magenta);
 		ConsoleUtil::WriteLine("3. Transfer Money", Magenta);
 		ConsoleUtil::WriteLine("4. Exit Banking App", Magenta);
 	}
 
-	// Using Enum MenuOption class, makes a switch statement for each choice if chosen.
+	// Using enum MenuOption, makes a switch statement for each choice if chosen.
 	void HandleSelection(MenuOption option)
 	{
 		switch (option)
 		{
 		case MenuOption::Deposit:
+			system("CLS");
 
-			break;
+			double deposit_Amount;
+			ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
+			std::cin >> deposit_Amount;
+
+			if (acc_Reference.Deposit(deposit_Amount)== true)
+			{
+				ConsoleUtil::WriteLine("Congraulations! Your Deposit was completed safely", Green);
+			}
+			system("pause");
+				break;
+
 		case MenuOption::Withdraw:
-			
+			system("CLS");
+
+			double withdraw_Amount;
+			ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
+			std::cin >> withdraw_Amount;
+
+			if (acc_Reference.Withdraw(withdraw_Amount) == true)
+			{
+				ConsoleUtil::WriteLine("Congraulations! Your Money was Withdrawn safely", Green);
+			}
+			system("pause");
 			break;
+
 		case MenuOption::Transfer:
-
+			ConsoleUtil::WriteLine("Transfer System Coming Soon...", Red);
 			break;
-		case MenuOption::Exit:
 
+		case MenuOption::Exit:
+			is_Running = false;
 			break;
 		}
 	}
