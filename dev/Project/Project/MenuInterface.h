@@ -1,7 +1,8 @@
 #pragma once
+#include "Account.h"
+
 class MenuInterface
 {
-
 public:
 	enum MenuOption
 
@@ -14,8 +15,27 @@ public:
 		Exit
 	};
 
+private:
+	Account& acc_Reference;
 
-	
+	void DisplayMainMenu();
 
+	void HandleSelection(MenuOption option);
+
+public:
+
+	MenuInterface(Account& _reference) : acc_Reference(_reference)
+	{
+	}
+
+	void Run()
+	{
+		bool is_Running = true;
+
+		while (is_Running == true)
+		{
+
+		}
+	}
 };
 
