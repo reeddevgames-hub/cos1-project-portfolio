@@ -1,22 +1,3 @@
-# 🚀 Welcome to Project & Portfolio!
-
-This repository will be used to keep track of research and development conducted in this class. Follow the instructions below to get started.
-cos
-### Getting Started
-
-**1.** Review the [About](./docs/01_about/README.md) README and all of the links it provides.
-
-**2.** Review the documentation and [Getting Started](./docs/02_getting_started/README.md) steps in this repository's docs folder.
-
-**3.** Attend the first Live Lecture to see a live setup demo. If you are unable to attend, make sure to watch the archive.
-
-### Next Steps...
-
-After completing the above steps, feel free to begin updating this readme where indicated below. Remember to update this document each week to receive proper credit for the weekly Milestone assignment.
-
-<br>
-
-> ❗️ &nbsp; Now that you have read to this point, go ahead and delete this sentence and everything above it.
 
 <br>
 
@@ -24,7 +5,7 @@ After completing the above steps, feel free to begin updating this readme where 
 
 ### Student First & Last Name
 
-Hello my name is [enter name]. I am a student from [where are you from?]. The purpose of this repository is to practice development using version control. This work will help me begin to build a portfolio of skills and accomplishment that can be shared in the future.
+Hello my name is Matthew Reed. I am a student from Oregon. The purpose of this repository is to practice development using version control. This work will help me begin to build a portfolio of skills and accomplishment that can be shared in the future.
 
 <br>
 
@@ -44,7 +25,16 @@ Each week I will summarize my milestone activity and progress by writing a stand
 
 ### Week 1
 
-Replace this paragraph with your stand up for this week. Use the prompts above to summarize your most recent milestone activity and work.
+End of Week Stand-Up Update:                           Overview - What I worked on this past week 
+
+This week I worked on my version control.md Markdown file. I created a basic Bank Account System project, with 6 classes. I focused on Creating and coding an Account class Which holds the users account information for now, a Consol Utilities Class called ‘ConsoleUtil’ it has an Enum for coloring text and Write and WriteLine functions taken from inspiration from the card game in PG2 I believe. 
+I created a MenuInterface class to pull the information from the Account.h  and ConsoleUtil.h, and write out the information to the console when prompted. It is also where the main Run function is linked to the account and users' input in order to get the user to create an account and display that new account information and Main Menu display.
+
+Challenges - What problems did I have & how I'm addressing them: A problem that I had was figuring out how to make the Write and WriteLine functions like the instructors did. After figuring out how to create those functions, I was able to write out colored text to the console which at the moment is the extent of my artistic capabilities.
+
+Accomplishments - What is something I "leveled up" on this week: I figured out a way to write code using Write and WriteLine making it colorful which I am proud of. Another thing i am proud of is that I planned and thought through a bit more before I started. I have other classes i want to implement later to add more to the Application.
+
+Next Steps - What I plan to prioritize and do next: For this next week I want to code my Bank System which will store multiple different Accounts created by the user, if the user wants to stay with their main account, they can add sub accounts in the account.h file which would be the savings and/or checking account or a credit account.
 
 ### Week 2
 
