@@ -24,17 +24,17 @@ List the correct Terminal commands to do the actions listed below. Replace **CMD
 **The last bullet provides an example**.
 
 [CMD's For Windows Command Prompt]
-- [ cls ]: Clear the Screen
-- [ cd ]: Print the "Working Directory"
-- [ dir ]: List files and folders
-- [ dir /a ]: List files and folders, including invisible files
-- [ dir /b]: List all files and folders, in human readable form. Same as printing working directory
-- [ cd 'type folder name from current' ]: Change directory while inside current drive.
-- [ cd \ ]: Change directory, go to root directory
-- [ cd %USERPROFILE% ]: Change directory and go to user home directory
-- [ cd .. ]: Change directory, go up one folder level
-- [ cd .. \ .. ]: Change directory, go up two folder levels
-- [ cd %USERPROFILE%\OneDrive\Desktop ]: Change directory to my desktop!
+- cls : Clear the Screen
+- cd : Print the "Working Directory"
+- dir : List files and folders
+- dir /a : List files and folders, including invisible files
+- dir /b : List all files and folders, in human readable form. Same as printing working directory
+- cd 'type folder name from current': Change directory while inside current drive.
+- cd \ : Change directory, go to root directory
+- cd %USERPROFILE% : Change directory and go to user home directory
+- cd .. : Change directory, go up one folder level
+-  cd .. \ .. : Change directory, go up two folder levels
+- cd %USERPROFILE%\OneDrive\Desktop : Change directory to my desktop!
 
 **2. Using Terminal...**
 
