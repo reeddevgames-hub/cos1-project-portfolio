@@ -22,7 +22,7 @@ private:
 
 	void DisplayMainMenu()
 	{
-		system("CLS");
+
 
 		// Display User Account Info. 
 		ConsoleUtil::WriteLine("========================================", Red);
@@ -47,36 +47,43 @@ private:
 		switch (option)
 		{
 		case MenuOption::Deposit:
-			system("CLS");
+
 
 			double deposit_Amount;
+			ConsoleUtil::WriteLine();
 			ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
 			std::cin >> deposit_Amount;
 
 			if (acc_Reference.Deposit(deposit_Amount)== true)
 			{
+				ConsoleUtil::WriteLine();
 				ConsoleUtil::WriteLine("Congraulations! Your Deposit was completed safely", Green);
 			}
 			system("pause");
 				break;
 
 		case MenuOption::Withdraw:
-			system("CLS");
+
 
 			double withdraw_Amount;
+			ConsoleUtil::WriteLine();
 			ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
 			std::cin >> withdraw_Amount;
 
 			if (acc_Reference.Withdraw(withdraw_Amount) == true)
 			{
+				ConsoleUtil::WriteLine();
 				ConsoleUtil::WriteLine("Congraulations! Your Money was Withdrawn safely", Green);
 			}
 			system("pause");
+			ConsoleUtil::WriteLine();
 			break;
 
 		case MenuOption::Transfer:
+			ConsoleUtil::WriteLine();
 			ConsoleUtil::WriteLine("Transfer System Coming Soon...", Red);
 			system("pause");
+			ConsoleUtil::WriteLine();
 			break;
 
 		case MenuOption::Exit:
@@ -105,22 +112,25 @@ public:
 		ConsoleUtil::WriteLine("1. Please Enter '1' in Order to Create an Account", Cyan);
 		ConsoleUtil::Write("Enter Here: ", Cyan);
 		std::cin >> userInput;
+		ConsoleUtil::WriteLine();
 
 		// When user creates an account, run this.
 		if (userInput == 1)
 		{
-			system("CLS");
+
 
 			std::cin.ignore();
 			
 			// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
 			ConsoleUtil::Write("Please Enter Your Desired Name: ", Cyan); std::getline(std::cin, userName);
 			acc_Reference.SetAccountHolderName(userName.c_str());
+			ConsoleUtil::WriteLine();
 			
 			// Enter your initial Deposit amount.
 			ConsoleUtil::Write("Please Enter Your Initial Deposit Amount: $", Cyan);
 			std::cin >> initial_Deposit;
 			acc_Reference.Deposit(initial_Deposit);
+			ConsoleUtil::WriteLine();
 		}
 		while (is_Running == true)
 		{
@@ -129,6 +139,7 @@ public:
 			std::cin >> userInput;
 			std::cin.ignore();
 			HandleSelection((MenuOption)userInput);
+
 		}
 	}
 };
