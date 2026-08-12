@@ -1,10 +1,9 @@
 #pragma once
 #include<cstring>
 
-class Account
-
 // This will represent a single bank account record and will contain the account number, Account Holders name, 
 // and the balance of the account in question.
+class Account
 {
 private:
 	
