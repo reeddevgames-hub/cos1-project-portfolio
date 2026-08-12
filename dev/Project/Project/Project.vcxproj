@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
     <ClCompile Include="BankSystem.cpp" />
+    <ClCompile Include="ConsoleUtil.cpp" />
     <ClCompile Include="InputFilter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuInterface.cpp" />

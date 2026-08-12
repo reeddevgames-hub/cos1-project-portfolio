@@ -15,63 +15,24 @@ private:
 public:
 
 	// Constructor
-	Account( int accId, const char* name, double balance) : account_Number(accId), total_Balance(balance) 
-	{
-		strcpy_s(holder_Name, 50, name);
-	}
-
+	Account(int accId, const char* name, double balance);
+	
 	// Getters
-	int GetAccountNumber() const
-	{
-		return account_Number;
-	}
+	int GetAccountNumber() const;
 
-	const char* GetAccountHolderName() const
-	{
-		return holder_Name;
-	}
+	const char* GetAccountHolderName() const;
 
-	double GetAccountBalance() const
-	{
-		return total_Balance;
-	}
+	double GetAccountBalance() const;
 
 	// Setters
-	void SetAccountNumber(int acc_Number)
-	{
-		account_Number = acc_Number;
-	}
+	void SetAccountNumber(int acc_Number);
+	
+	void SetAccountHolderName(const char* _name);
+	
 
-	void SetAccountHolderName(const char* _name)
-	{
-		strcpy_s(holder_Name, 50, _name);
-	}
 
-	bool Deposit(double _balance)
-	{
-		if (_balance > 0)
-		{
-			total_Balance += _balance;
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+	bool Deposit(double _balance);
 
-	bool Withdraw(double _balance)
-	{
-		if (_balance > 0 && total_Balance >= _balance)
-		{
-			total_Balance -= _balance;
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
+	bool Withdraw(double _balance);
 };
 
