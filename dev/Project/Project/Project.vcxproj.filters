@@ -21,7 +21,7 @@
     <ClCompile Include="Account.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BankSystem.cpp">
+    <ClCompile Include="AccountManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MenuInterface.cpp">
@@ -41,7 +41,7 @@
     <ClInclude Include="Account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BankSystem.h">
+    <ClInclude Include="AccountManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MenuInterface.h">
