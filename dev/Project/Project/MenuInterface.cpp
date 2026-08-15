@@ -83,7 +83,8 @@ void MenuInterface::Run()
 	int userInput;
 	std::string userName;
 	double initial_Deposit;
-
+	int userPin;
+	int typeChoice;
 
 	ConsoleUtil::WriteLine("===============================", Red);
 	ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Welcome To Energy Bank! ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
@@ -97,13 +98,35 @@ void MenuInterface::Run()
 	// When user creates an account, run this.
 	if (userInput == 1)
 	{
-
-
 		std::cin.ignore();
 
 		// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
 		ConsoleUtil::Write("Please Enter Your Desired Name: ", Cyan); std::getline(std::cin, userName);
 		acc_Reference.SetAccountHolderName(userName.c_str());
+		ConsoleUtil::WriteLine();
+
+		// Select Account Type to create.
+		ConsoleUtil::WriteLine("Select Account Type:", Cyan);
+		ConsoleUtil::Write("1. Checking \n2. Savings", Cyan);
+		ConsoleUtil::WriteLine("Enter Choice (1-2): ", Cyan);
+		std::cin >> typeChoice;
+		
+		// If the user chooses 2, set the interest rate to 5% and create a savings account, else just create a checking account. 
+		if (typeChoice == 2)
+		{
+			acc_Reference.SetAccountType(Account::Savings);
+			acc_Reference.SetInterestRate(0.05);
+		} 
+		else 
+		{
+			acc_Reference.SetAccountType(Account::Checking);
+		}
+		ConsoleUtil::WriteLine();
+
+		// Promp the user to create a pin for added security.
+		ConsoleUtil::Write("Create a 4-Digit Security Pin: ", Cyan);
+		std::cin >> userPin;
+		acc_Reference.SetPin(userPin);
 		ConsoleUtil::WriteLine();
 
 		// Enter your initial Deposit amount.
@@ -114,11 +137,23 @@ void MenuInterface::Run()
 	}
 	while (is_Running == true)
 	{
+		ConsoleUtil::WriteLine("(*Dev Tip: Press '9' to execute monthly interest cycle*)", Yellow);
+
 		DisplayMainMenu();
 		ConsoleUtil::Write("Enter Option: ", Magenta);
 		std::cin >> userInput;
 		std::cin.ignore();
-		HandleSelection((MenuInterface::MenuOption)userInput);
 
+
+		if (userInput==9)
+		{
+			acc_Reference.ApplyInterest();
+			ConsoleUtil::WriteLine("It is a new month! Check your new balance!", Green);
+			system("pause");
+		}
+		else
+		{
+			HandleSelection((MenuInterface::MenuOption)userInput);
+		}
 	}
 }
