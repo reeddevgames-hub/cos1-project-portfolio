@@ -2,7 +2,7 @@
 #include <iostream>
 
 // Constructor Definition
-MenuInterface::MenuInterface(Account& _reference) : acc_Reference(_reference)
+MenuInterface::MenuInterface(AccountManager& _reference) : acc_Reference(_reference)
 {
 
 }
@@ -13,8 +13,8 @@ void MenuInterface:: DisplayMainMenu()
 	// Display User Account Info. 
 	ConsoleUtil::WriteLine("========================================", Red);
 	ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Your Current Account Information ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
-	ConsoleUtil::Write("Account Holder: ", Cyan); ConsoleUtil::WriteLine(acc_Reference.GetAccountHolderName(), Cyan);
-	ConsoleUtil::Write("Current Balance: $", Cyan); ConsoleUtil::WriteLine(std::to_string(acc_Reference.GetAccountBalance()), Green);
+	ConsoleUtil::Write("Account Holder: ", Cyan); ConsoleUtil::WriteLine(acc_Reference.GetCurrentUser()->GetAccountHolderName(), Cyan);
+	ConsoleUtil::Write("Current Balance: $", Cyan); ConsoleUtil::WriteLine(std::to_string(acc_Reference.GetCurrentUser()->GetAccountBalance()), Green);
 	ConsoleUtil::WriteLine("========================================", Red);
 	ConsoleUtil::WriteLine();
 
@@ -38,7 +38,7 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
 		std::cin >> deposit_Amount;
 
-		if (acc_Reference.Deposit(deposit_Amount) == true)
+		if (acc_Reference.GetCurrentUser()->Deposit(deposit_Amount) == true)
 		{
 			ConsoleUtil::WriteLine();
 			ConsoleUtil::WriteLine("Congraulations! Your Deposit was completed safely", Green);
@@ -52,7 +52,7 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
 		std::cin >> withdraw_Amount;
 
-		if (acc_Reference.Withdraw(withdraw_Amount) == true)
+		if (acc_Reference.GetCurrentUser()->Withdraw(withdraw_Amount) == true)
 		{
 			ConsoleUtil::WriteLine();
 			ConsoleUtil::WriteLine("Congraulations! Your Money was Withdrawn safely", Green);
@@ -62,8 +62,23 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		break;
 
 	case MenuInterface::Transfer:
+		int destinationacc_ID;
+		double sent_Amount;
+
 		ConsoleUtil::WriteLine();
-		ConsoleUtil::WriteLine("Transfer System Coming Soon...", Red);
+		ConsoleUtil::Write("Please Enter the Recipient 4-Digit Account ID Number: ", Cyan);
+		std::cin >> destinationacc_ID;
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::Write("Please Enter a POSITIVE amount to transfer: ", Cyan);
+		std::cin >> sent_Amount;
+		if (acc_Reference.TranferCoordinator(destinationacc_ID, sent_Amount) == true)
+		{
+			ConsoleUtil::WriteLine("Transfer was Successfully Completed!", Green);
+		}
+		else
+		{
+			ConsoleUtil::WriteLine("TRANSFER FAILED: (*Invalid Account ID!  or Insuficient Funds!*)", Red);
+		}
 		system("pause");
 		ConsoleUtil::WriteLine();
 		break;
@@ -86,24 +101,26 @@ void MenuInterface::Run()
 	double initial_Deposit;
 	int userPin;
 	int typeChoice;
+	int new_AccountID;
 
 	ConsoleUtil::WriteLine("===============================", Red);
 	ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Welcome To Energy Bank! ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
 	ConsoleUtil::WriteLine("===============================", Red);
 	ConsoleUtil::WriteLine();
-	ConsoleUtil::WriteLine("1. Please Enter '1' in Order to Create an Account", Cyan);
-	ConsoleUtil::Write("Enter Here: ", Cyan);
+	ConsoleUtil::WriteLine("Please enter the number associated with the choices from below! ", Cyan);
+	ConsoleUtil::WriteLine("1. Login to Your Account\n2. Open a New Bank Account", Cyan);
+	ConsoleUtil::Write("Enter Choice # Here: ", Cyan);
 	std::cin >> userInput;
 	ConsoleUtil::WriteLine();
 
 	// When user creates an account, run this.
-	if (userInput == 1)
+	if (userInput == 2)
 	{
 		std::cin.ignore();
 
 		// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
-		ConsoleUtil::Write("Please Enter Your Desired Name: ", Cyan); std::getline(std::cin, userName);
-		acc_Reference.SetAccountHolderName(userName.c_str());
+		ConsoleUtil::Write("Please Enter Your Desired Name: ", Cyan); 
+		std::getline(std::cin, userName);
 		ConsoleUtil::WriteLine();
 
 		// Select Account Type to create.
@@ -112,49 +129,84 @@ void MenuInterface::Run()
 		ConsoleUtil::WriteLine("Enter Choice (1-2): ", Cyan);
 		std::cin >> typeChoice;
 		
-		// If the user chooses 2, set the interest rate to 5% and create a savings account, else just create a checking account. 
+		Account::AccountType chosenType = Account::Checking;
+		double interestRate = 0.0;
+
 		if (typeChoice == 2)
 		{
-			acc_Reference.SetAccountType(Account::Savings);
-			acc_Reference.SetInterestRate(0.05);
-		} 
-		else 
-		{
-			acc_Reference.SetAccountType(Account::Checking);
+			chosenType = Account::Savings;
+			interestRate = 0.05;
 		}
+		// Prompt user to create an account ID.
 		ConsoleUtil::WriteLine();
-
-		// Promp the user to create a pin for added security.
-		ConsoleUtil::Write("Create a 4-Digit Security Pin: ", Cyan);
+		ConsoleUtil::Write("Create a Unique 4-Digit Account ID Number: ", Cyan);
+		std::cin >> new_AccountID;
+		
+		// Prompt user to create a security pin.
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("Create a 4-Digit Security Pin: ", Cyan);
 		std::cin >> userPin;
-		acc_Reference.SetPin(userPin);
-		ConsoleUtil::WriteLine();
 
-		// Enter your initial Deposit amount.
-		ConsoleUtil::Write("Please Enter Your Initial Deposit Amount: $", Cyan);
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("Please Enter Your Initial Deposit Amount: $", Cyan);
 		std::cin >> initial_Deposit;
-		acc_Reference.Deposit(initial_Deposit);
+
 		ConsoleUtil::WriteLine();
+		acc_Reference.AccountCreation(new_AccountID, userName.c_str(), initial_Deposit, chosenType, interestRate, userPin);
+		ConsoleUtil::WriteLine("Congradulations! Your account has successfully been created! Welcome To Energy Bank.", Green);
+		system("pause"); 
 	}
-	while (is_Running == true)
+
+	else if (userInput == 1)
 	{
-		ConsoleUtil::WriteLine("(*Dev Tip: Press '9' to execute monthly interest cycle*)", Yellow);
+		int loginID;
+		int loginPin;
 
-		DisplayMainMenu();
-		ConsoleUtil::Write("Enter Option: ", Magenta);
-		std::cin >> userInput;
-		std::cin.ignore();
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("Enter Your 4-Digit Account ID Number: ", Cyan);
+		std::cin >> loginID;
 
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("Enter Your 4-Digit Security Pin: ", Cyan);
+		std::cin >> loginPin;
 
-		if (userInput==9)
+		ConsoleUtil::WriteLine();
+		if (acc_Reference.LoginVerification(loginID, loginPin) == false)
 		{
-			acc_Reference.ApplyInterest();
-			ConsoleUtil::WriteLine("It is a new month! Check your new balance!", Green);
+			ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code!", Red);
 			system("pause");
+		
+			is_Running = false;
 		}
+		
 		else
 		{
-			HandleSelection((MenuInterface::MenuOption)userInput);
+			ConsoleUtil::WriteLine("ACCESS GRANTED:  Loading Main Menu...", Green);
+			system("pause");
+		}
+	}
+
+	if (acc_Reference.GetCurrentUser() != nullptr)
+	{
+		while (is_Running == true)
+		{
+			ConsoleUtil::WriteLine("(*Dev Tip: Press '9' to execute monthly interest cycle*)", Yellow);
+
+			DisplayMainMenu();
+			ConsoleUtil::Write("Enter Option: ", Magenta);
+			std::cin >> userInput;
+			std::cin.ignore();
+			
+			if (userInput == 9)
+			{
+				acc_Reference.RunGlobalInterestSweep();
+				ConsoleUtil::WriteLine("It is a new month! Check your new balance!", Green);
+				system("pause");
+			}
+			else
+			{
+				HandleSelection((MenuInterface::MenuOption)userInput);
+			}
 		}
 	}
 }

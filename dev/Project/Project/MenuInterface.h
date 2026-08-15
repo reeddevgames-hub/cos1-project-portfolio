@@ -2,6 +2,7 @@
 #include "Account.h"
 #include<cstdlib>
 #include"ConsoleUtil.h"
+#include"AccountManager.h"
 
 class MenuInterface
 {
@@ -18,7 +19,7 @@ public:
 
 private:
 	bool is_Running = true;
-	Account& acc_Reference;
+	AccountManager& acc_Reference;
 
 	void DisplayMainMenu();
 
@@ -26,7 +27,7 @@ private:
 
 public:
 
-	MenuInterface(Account& _reference);
+	MenuInterface(AccountManager& _reference);
 
 	void Run();
 };
