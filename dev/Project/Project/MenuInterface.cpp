@@ -33,8 +33,6 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 	switch (option)
 	{
 	case MenuInterface::Deposit:
-
-
 		double deposit_Amount;
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
@@ -49,8 +47,6 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		break;
 
 	case MenuInterface::Withdraw:
-
-
 		double withdraw_Amount;
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
@@ -73,6 +69,11 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		break;
 
 	case MenuInterface::Exit:
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("========================================", Red);
+		ConsoleUtil::WriteLine(" Thank you for banking with Energy Bank ", Cyan);
+		ConsoleUtil::WriteLine("        Have a fabulous day!!        ", Cyan);
+		ConsoleUtil::WriteLine("========================================", Red);
 		is_Running = false;
 		break;
 	}
