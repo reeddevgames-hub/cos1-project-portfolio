@@ -1,77 +1,62 @@
 #pragma once
 #include<cstring>
 
-class Account
-
 // This will represent a single bank account record and will contain the account number, Account Holders name, 
 // and the balance of the account in question.
+class Account
 {
+public:
+	enum AccountType {
+		Checking,
+		Savings
+	};
+
 private:
 	
 	int account_Number;               // Account Number, unique Identifier.
 	char holder_Name[50];            // Account Holders name in a char array with a max of 50 characters for ease of use with binary writing to file.
 	double total_Balance;              // The Account balances tied to that Account Holder. 
 
+	AccountType type;                 // Variable for account type enum.
+	double interest_Rate;             // Variable for interest rate for savings account. 
+	int pin;
+
 public:
 
 	// Constructor
-	Account( int accId, const char* name, double balance) : account_Number(accId), total_Balance(balance) 
-	{
-		strcpy_s(holder_Name, 50, name);
-	}
-
+	Account(int accId, const char* name, double balance, AccountType accType, double rate = 0.0, int new_Pin = 0000);
+	
 	// Getters
-	int GetAccountNumber() const
-	{
-		return account_Number;
-	}
+	int GetAccountNumber() const;
 
-	const char* GetAccountHolderName() const
-	{
-		return holder_Name;
-	}
+	const char* GetAccountHolderName() const;
 
-	double GetAccountBalance() const
-	{
-		return total_Balance;
-	}
+	double GetAccountBalance() const;
+
+	AccountType GetAccountType() const;
+
+	double GetInterestRate() const;
+
+	int GetPin() const;
 
 	// Setters
-	void SetAccountNumber(int acc_Number)
-	{
-		account_Number = acc_Number;
-	}
+	void SetAccountNumber(int accId);
+	
+	void SetAccountHolderName(const char* name);
+	
+	void SetAccountType(AccountType accType);
 
-	void SetAccountHolderName(const char* _name)
-	{
-		strcpy_s(holder_Name, 50, _name);
-	}
+	void SetInterestRate(double rate);
 
-	bool Deposit(double _balance)
-	{
-		if (_balance > 0)
-		{
-			total_Balance += _balance;
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+	void SetPin(int new_Pin);
 
-	bool Withdraw(double _balance)
-	{
-		if (_balance > 0 && total_Balance >= _balance)
-		{
-			total_Balance -= _balance;
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+	// Other Functions
+	bool Deposit(double _balance);
 
+	bool Withdraw(double _balance);
+
+	bool Transfer(Account& destination_Account, double amount);
+
+	void ApplyInterest();
 };
 
