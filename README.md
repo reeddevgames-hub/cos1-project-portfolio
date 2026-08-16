@@ -37,7 +37,14 @@ Next Steps - What I plan to prioritize and do next: For this next week I want to
 
 ### Week 2
 
-My next stand up will go here...
+End of Week 2 Stand-UP: 
+Update: So far thus week I've worked on getting my account manager working that should be able to access multiple stored accounts in its vector. I also got the base for my user input filtration code up and running but i am still working out the kinks for it. 
+
+Challenges: I've been finding places in my testing where i have had to press enter multiple times, so i am still finding out where I've gone wrong there. 
+
+Accomplishments: This week i am proud of myself because i have been working on my code and assignments throughout the week, but i need to give even more time throughout the week still. 
+
+What Next : This next week I plan on working on my storageManager class so i can have accounts be saved to a binary file that can be accessed in the next test and still have the old accounts. I'm still not entirely done with coding so i am going to take a break for the night since i have been working on it all day and i will finish it tomorrow.
 
 ### Week 3
 

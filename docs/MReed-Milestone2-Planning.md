@@ -97,7 +97,7 @@ Add an Account Type indicator (Feature 5): Add an enum AccountType with Checking
 
 
 **What data structures will you use (vectors, 2D vectors, etc.)?**   
-→   
+→   I'll be using vectors, and pointers a bit.
   
 ---
 ## 🔄 Program Flow  
@@ -115,13 +115,13 @@ Add an Account Type indicator (Feature 5): Add an enum AccountType with Checking
 How will you make your program easier to use this week?  
   
 - Clearer prompts:   
-→   
+→  At the moment i have made it a little harder to read due to trying to find an enter key issue, where i have to press enter multiple times in order to move to the next prompt.
   
 - Better error handling:   
-→   
+→  I have created a base input filtration class but it may get changed later.
   
 - Improved menu/navigation:   
-→   
+→   I have added more features to the menu. There is now a login button if you already have an account or you can create a new account.
   
 ---
 ## 🎯 Usability Improvements  
@@ -141,10 +141,10 @@ How will you make your program easier to use this week?
 ## ⚠️ Potential Challenges  
   
 **What do you think will be the hardest part this week?**   
-→   
+→   The input filtration class I believe is the hardest.
   
 **What is your plan if you get stuck?**   
-→   
+→   I will plan on doing a bit more research and just doing a barebones filter and if it does not work, I can rework it.
   
 ---
 ## ⚠️ Potential Challenges  
@@ -160,21 +160,21 @@ How will you make your program easier to use this week?
 ## 📈 Level Up Goal  
   
 **What skill are you focusing on improving this week?**   
-→   
+→   Time Management
   
 **What will you do to improve it?**   
 (e.g., tutorial, practice, debugging, office hours)   
-→   
+→   I will practice working on it throughout the week in smaller portions if possible.
   
 ---
 ## 🗓️ Task Breakdown (GitHub Issues Planning)  
   
 List the tasks you plan to create as GitHub Issues:  
   
-- [ ]   
-- [ ]   
-- [ ]   
-- [ ]   
+- [x]   [Week 2: Instructor Critiques From Week 1]
+- [x]   [Create the InputFilter class and add any filters so User Input will not breake code.]
+- [x]   [Create the class BankSystem and update the MenuInterface code to pull from Bank instead of Account]
+- [x]  [If able, Create the StorageManager class] 
   
 ---
   
@@ -182,9 +182,9 @@ List the tasks you plan to create as GitHub Issues:
   
 Before you start coding, ask yourself:  
   
-- [ ] Do I know what I’m building this week?   
-- [ ] Do I know where to start?   
-- [ ] Did I break my work into small tasks?   
+- [x] Do I know what I’m building this week?   
+- [x] Do I know where to start?   
+- [x] Did I break my work into small tasks?   
   
 If yes → start coding 🚀   
 If no → refine your plan first   
