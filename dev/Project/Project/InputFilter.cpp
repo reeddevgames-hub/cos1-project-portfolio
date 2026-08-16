@@ -17,7 +17,7 @@ int InputFilter::SafeInteger(const char* promptMessage, const char* errorMessage
 
 			ConsoleUtil::WriteLine(errorMessage, Red);
 			system("pause");
-			system("cls");
+
 		}
 		else
 		{
@@ -43,7 +43,7 @@ double InputFilter::SafePositiveDouble(const char* promptMessage, const char* er
 
 			ConsoleUtil::WriteLine(errorMessage, Red);
 			system("pause");
-			system("cls");
+
 		}
 		else
 		{
@@ -59,11 +59,6 @@ std::string InputFilter::SafeString(const char* promptMessage, const char* error
 
 	while (true)
 	{
-		if (std::cin.peek() == '\n')
-		{
-			std::cin.ignore();
-		}
-
 		ConsoleUtil::Write(promptMessage, Cyan);
 		std::getline(std::cin, validatedText);
 
@@ -71,7 +66,7 @@ std::string InputFilter::SafeString(const char* promptMessage, const char* error
 		{
 			ConsoleUtil::WriteLine(errorMessage, Red);
 			system("pause");
-			system("cls");
+
 		}
 		else
 		{

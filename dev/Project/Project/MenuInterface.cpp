@@ -1,5 +1,6 @@
 #include "MenuInterface.h"
 #include <iostream>
+#include "InputFilter.h"
 
 // Constructor Definition
 MenuInterface::MenuInterface(AccountManager& _reference) : acc_Reference(_reference)
@@ -35,8 +36,7 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 	case MenuInterface::Deposit:
 		double deposit_Amount;
 		ConsoleUtil::WriteLine();
-		ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
-		std::cin >> deposit_Amount;
+		deposit_Amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Invalid format! You must enter a positive decimal number.");
 
 		if (acc_Reference.GetCurrentUser()->Deposit(deposit_Amount) == true)
 		{
@@ -49,8 +49,7 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 	case MenuInterface::Withdraw:
 		double withdraw_Amount;
 		ConsoleUtil::WriteLine();
-		ConsoleUtil::Write("Please Enter a Positive Amount: $", Red);
-		std::cin >> withdraw_Amount;
+		withdraw_Amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Cash quantity must be a positive number.");
 
 		if (acc_Reference.GetCurrentUser()->Withdraw(withdraw_Amount) == true)
 		{
@@ -66,11 +65,10 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		double sent_Amount;
 
 		ConsoleUtil::WriteLine();
-		ConsoleUtil::Write("Please Enter the Recipient 4-Digit Account ID Number: ", Cyan);
-		std::cin >> destinationacc_ID;
+		destinationacc_ID = InputFilter::SafeInteger("Please Enter the Recipient 4 - Digit Account ID Number : ", "Error: IDs must consist of only numeric digits.");
 		ConsoleUtil::WriteLine();
-		ConsoleUtil::Write("Please Enter a POSITIVE amount to transfer: ", Cyan);
-		std::cin >> sent_Amount;
+		sent_Amount = InputFilter::SafePositiveDouble("Please Enter a POSITIVE amount to transfer: ", "Error: You cannot send a negative amount or 0.0 dollars.");
+
 		if (acc_Reference.TranferCoordinator(destinationacc_ID, sent_Amount) == true)
 		{
 			ConsoleUtil::WriteLine("Transfer was Successfully Completed!", Green);
@@ -113,25 +111,18 @@ void MenuInterface::Run()
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::WriteLine("Please enter the number associated with the choices from below! ", Cyan);
 		ConsoleUtil::WriteLine("1. Login to Your Account\n2. Open a New Bank Account", Cyan);
-		ConsoleUtil::Write("Enter Choice # Here: ", Cyan);
-		std::cin >> userInput;
-		ConsoleUtil::WriteLine();
+		userInput = InputFilter::SafeInteger("Enter Choice # Here: ", "Error: Choice not recognized! Please enter a valid number (1 or 2).");
 
 		// When user creates an account, run this.
 		if (userInput == 2)
 		{
-			std::cin.ignore();
-
 			// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
-			ConsoleUtil::Write("Please Enter Your Desired Name: ", Cyan);
-			std::getline(std::cin, userName);
-			ConsoleUtil::WriteLine();
+			userName = InputFilter::SafeString("Please Enter Your Desired Name: ", "Error: Name field cannot be left blank! Please type an account holder name.");
 
 			// Select Account Type to create.
 			ConsoleUtil::WriteLine("Select Account Type:", Cyan);
 			ConsoleUtil::WriteLine("1. Checking \n2. Savings", Cyan);
-			ConsoleUtil::WriteLine("Enter Choice (1-2): ", Cyan);
-			std::cin >> typeChoice;
+			typeChoice = InputFilter::SafeInteger("Enter # Choice (1 or 2): ", "Error: Selection invalid! Please select from the available options (1 or 2).");
 
 			Account::AccountType chosenType = Account::Checking;
 			double interestRate = 0.0;
@@ -143,20 +134,13 @@ void MenuInterface::Run()
 				interestRate = 0.05;
 			}
 			// Prompt user to create an account ID.
-			ConsoleUtil::WriteLine();
-			ConsoleUtil::Write("Create a Unique 4-Digit Account ID Number: ", Cyan);
-			std::cin >> new_AccountID;
+			new_AccountID = InputFilter::SafeInteger("Create a Unique 4-Digit Account ID Number: ", "Error: Invalid Input! System account IDs must be numbers.");
 
 			// Prompt user to create a security pin.
-			ConsoleUtil::WriteLine();
-			ConsoleUtil::Write("Create a 4-Digit Security Pin: ", Cyan);
-			std::cin >> userPin;
+			userPin = InputFilter::SafeInteger("Create a 4-Digit Security Pin: ", "Error: Pin code must be 4-digit numbers.");
 
-			ConsoleUtil::WriteLine();
-			ConsoleUtil::Write("Please Enter Your Initial Deposit Amount: $", Cyan);
-			std::cin >> initial_Deposit;
+			initial_Deposit = InputFilter::SafePositiveDouble("Please Enter Your Initial Deposit Amount: $", "Error: Opening balances must be valid positive decimal inputs.");
 
-			ConsoleUtil::WriteLine();
 			acc_Reference.AccountCreation(new_AccountID, userName.c_str(), initial_Deposit, chosenType, interestRate, userPin);
 			ConsoleUtil::WriteLine("Congradulations! Your account has successfully been created! Welcome To Energy Bank.", Green);
 			system("pause");
@@ -171,20 +155,14 @@ void MenuInterface::Run()
 			int loginID;
 			int loginPin;
 
-			ConsoleUtil::WriteLine();
-			ConsoleUtil::WriteLine("Enter Your 4-Digit Account ID Number: ", Cyan);
-			std::cin >> loginID;
+			loginID = InputFilter::SafeInteger("Enter Your 4-Digit Account ID Number: ", "Error: Invalid Input! IDs must be numeric digits in order to access your account/s.");
 
-			ConsoleUtil::WriteLine();
-			ConsoleUtil::WriteLine("Enter Your 4-Digit Security Pin: ", Cyan);
-			std::cin >> loginPin;
+			loginPin = InputFilter::SafeInteger("Enter Your 4-Digit Security Pin: ", "Error: Invalid Entry! Please type your 4-Digit pin.");
 
-			ConsoleUtil::WriteLine();
 			if (acc_Reference.LoginVerification(loginID, loginPin) == false)
 			{
-				ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code!", Red);
+				ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code! Please Create an Account if you do not have one yet.", Red);
 				system("pause");
-				system("cls");
 			}
 
 			else
@@ -216,6 +194,8 @@ void MenuInterface::Run()
 			else
 			{
 				HandleSelection((MenuInterface::MenuOption)userInput);
+
+				std::cin.ignore(1000, '\n');
 			}
 		}
 	}
