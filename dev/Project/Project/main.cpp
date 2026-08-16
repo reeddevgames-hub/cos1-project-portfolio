@@ -2,11 +2,12 @@
 #include "ConsoleUtil.h"
 #include"Account.h"
 #include "MenuInterface.h"
+#include"AccountManager.h"
 
 int main()
 {
-	Account accObject(0001, "", 0.0);
+	AccountManager bankMasterDatabase;
 
-	MenuInterface bank_Application(accObject);
+	MenuInterface bank_Application(bankMasterDatabase);
 	bank_Application.Run();
 }

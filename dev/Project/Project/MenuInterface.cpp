@@ -102,87 +102,97 @@ void MenuInterface::Run()
 	int userPin;
 	int typeChoice;
 	int new_AccountID;
+	bool is_Authenticated = false;
 
-	ConsoleUtil::WriteLine("===============================", Red);
-	ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Welcome To Energy Bank! ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
-	ConsoleUtil::WriteLine("===============================", Red);
-	ConsoleUtil::WriteLine();
-	ConsoleUtil::WriteLine("Please enter the number associated with the choices from below! ", Cyan);
-	ConsoleUtil::WriteLine("1. Login to Your Account\n2. Open a New Bank Account", Cyan);
-	ConsoleUtil::Write("Enter Choice # Here: ", Cyan);
-	std::cin >> userInput;
-	ConsoleUtil::WriteLine();
-
-	// When user creates an account, run this.
-	if (userInput == 2)
+	while (is_Authenticated == false)
 	{
-		std::cin.ignore();
-
-		// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
-		ConsoleUtil::Write("Please Enter Your Desired Name: ", Cyan); 
-		std::getline(std::cin, userName);
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("===============================", Red);
+		ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Welcome To Energy Bank! ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
+		ConsoleUtil::WriteLine("===============================", Red);
+		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("Please enter the number associated with the choices from below! ", Cyan);
+		ConsoleUtil::WriteLine("1. Login to Your Account\n2. Open a New Bank Account", Cyan);
+		ConsoleUtil::Write("Enter Choice # Here: ", Cyan);
+		std::cin >> userInput;
 		ConsoleUtil::WriteLine();
 
-		// Select Account Type to create.
-		ConsoleUtil::WriteLine("Select Account Type:", Cyan);
-		ConsoleUtil::Write("1. Checking \n2. Savings", Cyan);
-		ConsoleUtil::WriteLine("Enter Choice (1-2): ", Cyan);
-		std::cin >> typeChoice;
-		
-		Account::AccountType chosenType = Account::Checking;
-		double interestRate = 0.0;
-
-		if (typeChoice == 2)
+		// When user creates an account, run this.
+		if (userInput == 2)
 		{
-			chosenType = Account::Savings;
-			interestRate = 0.05;
-		}
-		// Prompt user to create an account ID.
-		ConsoleUtil::WriteLine();
-		ConsoleUtil::Write("Create a Unique 4-Digit Account ID Number: ", Cyan);
-		std::cin >> new_AccountID;
-		
-		// Prompt user to create a security pin.
-		ConsoleUtil::WriteLine();
-		ConsoleUtil::WriteLine("Create a 4-Digit Security Pin: ", Cyan);
-		std::cin >> userPin;
+			std::cin.ignore();
 
-		ConsoleUtil::WriteLine();
-		ConsoleUtil::WriteLine("Please Enter Your Initial Deposit Amount: $", Cyan);
-		std::cin >> initial_Deposit;
+			// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
+			ConsoleUtil::Write("Please Enter Your Desired Name: ", Cyan);
+			std::getline(std::cin, userName);
+			ConsoleUtil::WriteLine();
 
-		ConsoleUtil::WriteLine();
-		acc_Reference.AccountCreation(new_AccountID, userName.c_str(), initial_Deposit, chosenType, interestRate, userPin);
-		ConsoleUtil::WriteLine("Congradulations! Your account has successfully been created! Welcome To Energy Bank.", Green);
-		system("pause"); 
-	}
+			// Select Account Type to create.
+			ConsoleUtil::WriteLine("Select Account Type:", Cyan);
+			ConsoleUtil::WriteLine("1. Checking \n2. Savings", Cyan);
+			ConsoleUtil::WriteLine("Enter Choice (1-2): ", Cyan);
+			std::cin >> typeChoice;
 
-	else if (userInput == 1)
-	{
-		int loginID;
-		int loginPin;
+			Account::AccountType chosenType = Account::Checking;
+			double interestRate = 0.0;
 
-		ConsoleUtil::WriteLine();
-		ConsoleUtil::WriteLine("Enter Your 4-Digit Account ID Number: ", Cyan);
-		std::cin >> loginID;
+			// Account Creation Block
+			if (typeChoice == 2)
+			{
+				chosenType = Account::Savings;
+				interestRate = 0.05;
+			}
+			// Prompt user to create an account ID.
+			ConsoleUtil::WriteLine();
+			ConsoleUtil::Write("Create a Unique 4-Digit Account ID Number: ", Cyan);
+			std::cin >> new_AccountID;
 
-		ConsoleUtil::WriteLine();
-		ConsoleUtil::WriteLine("Enter Your 4-Digit Security Pin: ", Cyan);
-		std::cin >> loginPin;
+			// Prompt user to create a security pin.
+			ConsoleUtil::WriteLine();
+			ConsoleUtil::Write("Create a 4-Digit Security Pin: ", Cyan);
+			std::cin >> userPin;
 
-		ConsoleUtil::WriteLine();
-		if (acc_Reference.LoginVerification(loginID, loginPin) == false)
-		{
-			ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code!", Red);
+			ConsoleUtil::WriteLine();
+			ConsoleUtil::Write("Please Enter Your Initial Deposit Amount: $", Cyan);
+			std::cin >> initial_Deposit;
+
+			ConsoleUtil::WriteLine();
+			acc_Reference.AccountCreation(new_AccountID, userName.c_str(), initial_Deposit, chosenType, interestRate, userPin);
+			ConsoleUtil::WriteLine("Congradulations! Your account has successfully been created! Welcome To Energy Bank.", Green);
 			system("pause");
-		
-			is_Running = false;
+
+			acc_Reference.LoginVerification(new_AccountID, userPin);
+			is_Authenticated = true;
 		}
-		
-		else
+
+		// Login Block
+		else if (userInput == 1)
 		{
-			ConsoleUtil::WriteLine("ACCESS GRANTED:  Loading Main Menu...", Green);
-			system("pause");
+			int loginID;
+			int loginPin;
+
+			ConsoleUtil::WriteLine();
+			ConsoleUtil::WriteLine("Enter Your 4-Digit Account ID Number: ", Cyan);
+			std::cin >> loginID;
+
+			ConsoleUtil::WriteLine();
+			ConsoleUtil::WriteLine("Enter Your 4-Digit Security Pin: ", Cyan);
+			std::cin >> loginPin;
+
+			ConsoleUtil::WriteLine();
+			if (acc_Reference.LoginVerification(loginID, loginPin) == false)
+			{
+				ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code!", Red);
+				system("pause");
+				system("cls");
+			}
+
+			else
+			{
+				ConsoleUtil::WriteLine("ACCESS GRANTED:  Loading Main Menu...", Green);
+				system("pause");
+				is_Authenticated = true;
+			}
 		}
 	}
 
