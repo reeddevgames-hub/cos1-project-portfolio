@@ -7,24 +7,32 @@
 class AccountManager
 {
 private:
-	std::vector<Account> master_Registry;
-	Account* currentUser;
+	std::vector<Account*> master_registry;
+	Account* current_user;
 
 public:
 	AccountManager();
 
-	void AccountCreation(int IDNumber, const char* usersName, double initialDeposit, Account::AccountType acc_Type, double interestRate, int securityPin);
-
-	bool LoginVerification(int IDNum, int securePin);
+	void AccountCreation(int id_number, const char* users_name, double initial_deposit, Account::AccountType account_type, double interest_rate, int security_pin);
+	bool LoginVerification(int id_num, int secure_pin);
 	void Logout();
 
-	Account* PrivateAccountFinder(int IDNumber1);
-	bool TranferCoordinator(int destination_IDNum, double sending_Amount);
+	Account* PrivateAccountFinder(int id_number);
+	bool TranferCoordinator(int destination_id, double sending_amount);
 
 	void RunGlobalInterestSweep();
 
-	// Getters
+	// Getters.
 	Account* GetCurrentUser() const;
 
-	const std::vector<Account>& GetMasterRegistry() const;
+	const std::vector<Account*>& GetMasterRegistry() const;
+
+	// Destructor.
+	~AccountManager();
+
+	// Disables the Copy Constructor in order to stop code from initilizing a new manager as a direct copy of the existing manager.
+	AccountManager(const AccountManager&) = delete;
+
+	// Disables the Copy Assignment Operator in order to stop an existing manager from copying data from another manager.
+	AccountManager& operator=(const AccountManager&) = delete;
 };
