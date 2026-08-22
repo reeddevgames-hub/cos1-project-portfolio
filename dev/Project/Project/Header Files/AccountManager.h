@@ -30,7 +30,7 @@ public:
 	// Destructor.
 	~AccountManager();
 
-	// Disables the Copy Constructor in order to stop code from initilizing a new manager as a direct copy of the existing manager.
+	// Disables the Copy Constructor in order to stop code from initializing a new manager as a direct copy of the existing manager.
 	AccountManager(const AccountManager&) = delete;
 
 	// Disables the Copy Assignment Operator in order to stop an existing manager from copying data from another manager.
