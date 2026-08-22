@@ -1,12 +1,10 @@
 #include "MenuInterface.h"
 #include <iostream>
 #include "InputFilter.h"
+#include<string>
 
 // Constructor Definition
-MenuInterface::MenuInterface(AccountManager& reference) : acc_reference(reference), is_running(true)
-{
-
-}
+MenuInterface::MenuInterface(AccountManager& reference) : acc_reference(reference), is_running(true) { }
 
 // Display Bank Main Menu and created account information.
 void MenuInterface:: DisplayMainMenu()
@@ -92,16 +90,58 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 	}
 }
 
+// Stand-alone function to handle account creation. 
+void MenuInterface::HandleAccountCreation()
+{
+	std::string user_name = InputFilter::SafeString("Please Enter Your Desired Name: ", "Error: Name field cannot be left blank! Please type an account holder name.");
+
+	ConsoleUtil::WriteLine("Select Account Type:", Cyan);
+	ConsoleUtil::WriteLine("1. Checking \n2. Savings", Cyan);
+	int type_choice = InputFilter::SafeInteger("Enter # Choice (1 or 2): ", "Error: Selection invalid! Please select from the available options (1 or 2).");
+
+	Account::AccountType chosen_type = Account::Checking;
+	double interest_rate = 0.0;
+
+	if (type_choice == 2)
+	{
+		chosen_type = Account::Savings;
+		interest_rate = 0.05;
+	}
+	
+	int new_account_id = InputFilter::SafeInteger("Create a Unique 4-Digit Account ID Number: ", "Error: Invalid Input! System account IDs must be numbers.");
+	int user_pin = InputFilter::SafeInteger("Create a 4-Digit Security Pin: ", "Error: Pin code must be 4-digit numbers.");
+	double initial_deposit = InputFilter::SafePositiveDouble("Please Enter Your Initial Deposit Amount: $", "Error: Opening balances must be valid positive decimal inputs.");
+
+	acc_reference.AccountCreation(new_account_id, user_name.c_str(), initial_deposit, chosen_type, interest_rate, user_pin);
+	ConsoleUtil::WriteLine("Congradulations! Your account has successfully been created! Welcome To Energy Bank.", Green);
+	system("pause");
+
+	acc_reference.LoginVerification(new_account_id, user_pin);
+}
+
+// Stand-alone function to handle login evaluation.
+void MenuInterface::HandleLogin(bool& is_authenticated)
+{
+	int login_id = InputFilter::SafeInteger("Enter Your 4-Digit Account ID Number: ", "Error: Invalid Input! IDs must be numeric digits in order to access your account/s.");
+	int login_pin = InputFilter::SafeInteger("Enter Your 4-Digit Security Pin: ", "Error: Invalid Entry! Please type your 4-Digit pin.");
+
+	if (!acc_reference.LoginVerification(login_id, login_pin))
+	{
+		ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code! Please Create an Account if you do not have one yet.", Red);
+		system("pause");
+	}
+	else
+	{
+		ConsoleUtil::WriteLine("ACCESS GRANTED:  Loading Main Menu...", Green);
+		system("pause");
+		is_authenticated = true;
+	}
+}
+
 
 
 void MenuInterface::Run()
 {
-	int user_input;
-	std::string user_name;
-	double initial_deposit;
-	int user_pin;
-	int type_choice;
-	int new_account_id;
 	bool is_authenticated = false;
 
 	while (!is_authenticated)
@@ -113,66 +153,17 @@ void MenuInterface::Run()
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::WriteLine("Please enter the number associated with the choices from below! ", Cyan);
 		ConsoleUtil::WriteLine("1. Login to Your Account\n2. Open a New Bank Account", Cyan);
-		user_input = InputFilter::SafeInteger("Enter Choice # Here: ", "Error: Choice not recognized! Please enter a valid number (1 or 2).");
-
-		// When user creates an account, run this.
+		
+		int user_input = InputFilter::SafeInteger("Enter Choice # Here: ", "Error: Choice not recognized! Please enter a valid number (1 or 2).");
+	
 		if (user_input == 2)
 		{
-			// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
-			user_name = InputFilter::SafeString("Please Enter Your Desired Name: ", "Error: Name field cannot be left blank! Please type an account holder name.");
-
-			// Select Account Type to create.
-			ConsoleUtil::WriteLine("Select Account Type:", Cyan);
-			ConsoleUtil::WriteLine("1. Checking \n2. Savings", Cyan);
-			type_choice = InputFilter::SafeInteger("Enter # Choice (1 or 2): ", "Error: Selection invalid! Please select from the available options (1 or 2).");
-
-			Account::AccountType chosen_type = Account::Checking;
-			double interest_rate = 0.0;
-
-			// Account Creation Block
-			if (type_choice == 2)
-			{
-				chosen_type = Account::Savings;
-				interest_rate = 0.05;
-			}
-			// Prompt user to create an account ID.
-			new_account_id = InputFilter::SafeInteger("Create a Unique 4-Digit Account ID Number: ", "Error: Invalid Input! System account IDs must be numbers.");
-
-			// Prompt user to create a security pin.
-			user_pin = InputFilter::SafeInteger("Create a 4-Digit Security Pin: ", "Error: Pin code must be 4-digit numbers.");
-
-			initial_deposit = InputFilter::SafePositiveDouble("Please Enter Your Initial Deposit Amount: $", "Error: Opening balances must be valid positive decimal inputs.");
-
-			acc_reference.AccountCreation(new_account_id, user_name.c_str(), initial_deposit, chosen_type, interest_rate, user_pin);
-			ConsoleUtil::WriteLine("Congradulations! Your account has successfully been created! Welcome To Energy Bank.", Green);
-			system("pause");
-
-			acc_reference.LoginVerification(new_account_id, user_pin);
+			HandleAccountCreation();
 			is_authenticated = true;
 		}
-
-		// Login Block
 		else if (user_input == 1)
 		{
-			int login_id;
-			int login_pin;
-
-			login_id = InputFilter::SafeInteger("Enter Your 4-Digit Account ID Number: ", "Error: Invalid Input! IDs must be numeric digits in order to access your account/s.");
-
-			login_pin = InputFilter::SafeInteger("Enter Your 4-Digit Security Pin: ", "Error: Invalid Entry! Please type your 4-Digit pin.");
-
-			if (acc_reference.LoginVerification(login_id, login_pin) == false)
-			{
-				ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code! Please Create an Account if you do not have one yet.", Red);
-				system("pause");
-			}
-
-			else
-			{
-				ConsoleUtil::WriteLine("ACCESS GRANTED:  Loading Main Menu...", Green);
-				system("pause");
-				is_authenticated = true;
-			}
+			HandleLogin(is_authenticated);
 		}
 	}
 
@@ -184,10 +175,12 @@ void MenuInterface::Run()
 
 			DisplayMainMenu();
 			ConsoleUtil::Write("Enter Option: ", Magenta);
-			std::cin >> user_input;
+
+			int menu_selection;
+			std::cin >> menu_selection;
 			std::cin.ignore();
 			
-			if (user_input == 9)
+			if (menu_selection == 9)
 			{
 				acc_reference.RunGlobalInterestSweep();
 				ConsoleUtil::WriteLine("It is a new month! Check your new balance!", Green);
@@ -195,7 +188,7 @@ void MenuInterface::Run()
 			}
 			else
 			{
-				HandleSelection((MenuInterface::MenuOption)user_input);
+				HandleSelection((MenuInterface::MenuOption)menu_selection);
 
 				std::cin.ignore(1000, '\n');
 			}
