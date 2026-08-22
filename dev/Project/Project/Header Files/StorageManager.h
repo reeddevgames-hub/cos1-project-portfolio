@@ -1,9 +1,24 @@
 #pragma once
+#include <vector>
+#include "Account.h"
 
-//  Goal is that user inputted data 'like user name, account number, and balance'  will be written to file (probably a binary file).
-// First: will check if there is a file open and if not, open one.
-class StorageManager
+
+struct AccountRecord
 {
-
+	char account_holder_name[50];
+	int account_id;
+	int security_pin;
+	double account_balance;
+	double account_interest_rate;
 };
 
+class StorageManager
+{
+private:
+	const char* filename =  "banking_database.dat";
+
+public:
+	bool SaveAccountInterface(const std::vector<Account*>& reference);
+
+	std::vector<Account*> LoadAccountInterface();
+};
