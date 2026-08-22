@@ -16,16 +16,20 @@ public:
 	};
 
 private:
-	bool is_Running = true;
-	AccountManager& acc_Reference;
+	bool is_running = true;
+	AccountManager& acc_reference;
 
 	void DisplayMainMenu();
 
 	void HandleSelection(MenuOption option);
 
+	void HandleAccountCreation();
+
+	void HandleLogin(bool& is_authenticated);
+
 public:
 
-	MenuInterface(AccountManager& _reference);
+	MenuInterface(AccountManager& reference);
 
 	void Run();
 };

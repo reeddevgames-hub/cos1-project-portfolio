@@ -3,7 +3,7 @@
 #include "InputFilter.h"
 
 // Constructor Definition
-MenuInterface::MenuInterface(AccountManager& _reference) : acc_Reference(_reference)
+MenuInterface::MenuInterface(AccountManager& reference) : acc_reference(reference), is_running(true)
 {
 
 }
@@ -14,8 +14,8 @@ void MenuInterface:: DisplayMainMenu()
 	// Display User Account Info. 
 	ConsoleUtil::WriteLine("========================================", Red);
 	ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Your Current Account Information ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
-	ConsoleUtil::Write("Account Holder: ", Cyan); ConsoleUtil::WriteLine(acc_Reference.GetCurrentUser()->GetAccountHolderName(), Cyan);
-	ConsoleUtil::Write("Current Balance: $", Cyan); ConsoleUtil::WriteLine(std::to_string(acc_Reference.GetCurrentUser()->GetAccountBalance()), Green);
+	ConsoleUtil::Write("Account Holder: ", Cyan); ConsoleUtil::WriteLine(acc_reference.GetCurrentUser()->GetAccountHolderName(), Cyan);
+	ConsoleUtil::Write("Current Balance: $", Cyan); ConsoleUtil::WriteLine(std::to_string(acc_reference.GetCurrentUser()->GetAccountBalance()), Green);
 	ConsoleUtil::WriteLine("========================================", Red);
 	ConsoleUtil::WriteLine();
 
@@ -34,11 +34,11 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 	switch (option)
 	{
 	case MenuInterface::Deposit:
-		double deposit_Amount;
+		double deposit_amount;
 		ConsoleUtil::WriteLine();
-		deposit_Amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Invalid format! You must enter a positive decimal number.");
+		deposit_amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Invalid format! You must enter a positive decimal number.");
 
-		if (acc_Reference.GetCurrentUser()->Deposit(deposit_Amount) == true)
+		if (acc_reference.GetCurrentUser()->Deposit(deposit_amount) == true)
 		{
 			ConsoleUtil::WriteLine();
 			ConsoleUtil::WriteLine("Congraulations! Your Deposit was completed safely", Green);
@@ -47,11 +47,11 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		break;
 
 	case MenuInterface::Withdraw:
-		double withdraw_Amount;
+		double withdraw_amount;
 		ConsoleUtil::WriteLine();
-		withdraw_Amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Cash quantity must be a positive number.");
+		withdraw_amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Cash quantity must be a positive number.");
 
-		if (acc_Reference.GetCurrentUser()->Withdraw(withdraw_Amount) == true)
+		if (acc_reference.GetCurrentUser()->Withdraw(withdraw_amount) == true)
 		{
 			ConsoleUtil::WriteLine();
 			ConsoleUtil::WriteLine("Congraulations! Your Money was Withdrawn safely", Green);
@@ -61,15 +61,15 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		break;
 
 	case MenuInterface::Transfer:
-		int destinationacc_ID;
-		double sent_Amount;
+		int destinationacc_id;
+		double sent_amount;
 
 		ConsoleUtil::WriteLine();
-		destinationacc_ID = InputFilter::SafeInteger("Please Enter the Recipient 4 - Digit Account ID Number : ", "Error: IDs must consist of only numeric digits.");
+		destinationacc_id = InputFilter::SafeInteger("Please Enter the Recipient 4 - Digit Account ID Number : ", "Error: IDs must consist of only numeric digits.");
 		ConsoleUtil::WriteLine();
-		sent_Amount = InputFilter::SafePositiveDouble("Please Enter a POSITIVE amount to transfer: ", "Error: You cannot send a negative amount or 0.0 dollars.");
+		sent_amount = InputFilter::SafePositiveDouble("Please Enter a POSITIVE amount to transfer: ", "Error: You cannot send a negative amount or 0.0 dollars.");
 
-		if (acc_Reference.TranferCoordinator(destinationacc_ID, sent_Amount) == true)
+		if (acc_reference.TranferCoordinator(destinationacc_id, sent_amount) == true)
 		{
 			ConsoleUtil::WriteLine("Transfer was Successfully Completed!", Green);
 		}
@@ -87,22 +87,24 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		ConsoleUtil::WriteLine(" Thank you for banking with Energy Bank ", Cyan);
 		ConsoleUtil::WriteLine("        Have a fabulous day!!        ", Cyan);
 		ConsoleUtil::WriteLine("========================================", Red);
-		is_Running = false;
+		is_running = false;
 		break;
 	}
 }
 
+
+
 void MenuInterface::Run()
 {
-	int userInput;
-	std::string userName;
-	double initial_Deposit;
-	int userPin;
-	int typeChoice;
-	int new_AccountID;
-	bool is_Authenticated = false;
+	int user_input;
+	std::string user_name;
+	double initial_deposit;
+	int user_pin;
+	int type_choice;
+	int new_account_id;
+	bool is_authenticated = false;
 
-	while (is_Authenticated == false)
+	while (!is_authenticated)
 	{
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::WriteLine("===============================", Red);
@@ -111,55 +113,55 @@ void MenuInterface::Run()
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::WriteLine("Please enter the number associated with the choices from below! ", Cyan);
 		ConsoleUtil::WriteLine("1. Login to Your Account\n2. Open a New Bank Account", Cyan);
-		userInput = InputFilter::SafeInteger("Enter Choice # Here: ", "Error: Choice not recognized! Please enter a valid number (1 or 2).");
+		user_input = InputFilter::SafeInteger("Enter Choice # Here: ", "Error: Choice not recognized! Please enter a valid number (1 or 2).");
 
 		// When user creates an account, run this.
-		if (userInput == 2)
+		if (user_input == 2)
 		{
 			// Enter Users Desired name. Then it is passed to the account reference and converted to char for Setting the Account Holder Name.
-			userName = InputFilter::SafeString("Please Enter Your Desired Name: ", "Error: Name field cannot be left blank! Please type an account holder name.");
+			user_name = InputFilter::SafeString("Please Enter Your Desired Name: ", "Error: Name field cannot be left blank! Please type an account holder name.");
 
 			// Select Account Type to create.
 			ConsoleUtil::WriteLine("Select Account Type:", Cyan);
 			ConsoleUtil::WriteLine("1. Checking \n2. Savings", Cyan);
-			typeChoice = InputFilter::SafeInteger("Enter # Choice (1 or 2): ", "Error: Selection invalid! Please select from the available options (1 or 2).");
+			type_choice = InputFilter::SafeInteger("Enter # Choice (1 or 2): ", "Error: Selection invalid! Please select from the available options (1 or 2).");
 
-			Account::AccountType chosenType = Account::Checking;
-			double interestRate = 0.0;
+			Account::AccountType chosen_type = Account::Checking;
+			double interest_rate = 0.0;
 
 			// Account Creation Block
-			if (typeChoice == 2)
+			if (type_choice == 2)
 			{
-				chosenType = Account::Savings;
-				interestRate = 0.05;
+				chosen_type = Account::Savings;
+				interest_rate = 0.05;
 			}
 			// Prompt user to create an account ID.
-			new_AccountID = InputFilter::SafeInteger("Create a Unique 4-Digit Account ID Number: ", "Error: Invalid Input! System account IDs must be numbers.");
+			new_account_id = InputFilter::SafeInteger("Create a Unique 4-Digit Account ID Number: ", "Error: Invalid Input! System account IDs must be numbers.");
 
 			// Prompt user to create a security pin.
-			userPin = InputFilter::SafeInteger("Create a 4-Digit Security Pin: ", "Error: Pin code must be 4-digit numbers.");
+			user_pin = InputFilter::SafeInteger("Create a 4-Digit Security Pin: ", "Error: Pin code must be 4-digit numbers.");
 
-			initial_Deposit = InputFilter::SafePositiveDouble("Please Enter Your Initial Deposit Amount: $", "Error: Opening balances must be valid positive decimal inputs.");
+			initial_deposit = InputFilter::SafePositiveDouble("Please Enter Your Initial Deposit Amount: $", "Error: Opening balances must be valid positive decimal inputs.");
 
-			acc_Reference.AccountCreation(new_AccountID, userName.c_str(), initial_Deposit, chosenType, interestRate, userPin);
+			acc_reference.AccountCreation(new_account_id, user_name.c_str(), initial_deposit, chosen_type, interest_rate, user_pin);
 			ConsoleUtil::WriteLine("Congradulations! Your account has successfully been created! Welcome To Energy Bank.", Green);
 			system("pause");
 
-			acc_Reference.LoginVerification(new_AccountID, userPin);
-			is_Authenticated = true;
+			acc_reference.LoginVerification(new_account_id, user_pin);
+			is_authenticated = true;
 		}
 
 		// Login Block
-		else if (userInput == 1)
+		else if (user_input == 1)
 		{
-			int loginID;
-			int loginPin;
+			int login_id;
+			int login_pin;
 
-			loginID = InputFilter::SafeInteger("Enter Your 4-Digit Account ID Number: ", "Error: Invalid Input! IDs must be numeric digits in order to access your account/s.");
+			login_id = InputFilter::SafeInteger("Enter Your 4-Digit Account ID Number: ", "Error: Invalid Input! IDs must be numeric digits in order to access your account/s.");
 
-			loginPin = InputFilter::SafeInteger("Enter Your 4-Digit Security Pin: ", "Error: Invalid Entry! Please type your 4-Digit pin.");
+			login_pin = InputFilter::SafeInteger("Enter Your 4-Digit Security Pin: ", "Error: Invalid Entry! Please type your 4-Digit pin.");
 
-			if (acc_Reference.LoginVerification(loginID, loginPin) == false)
+			if (acc_reference.LoginVerification(login_id, login_pin) == false)
 			{
 				ConsoleUtil::WriteLine("ACCESS DENIED: Invalid ID or PIN Code! Please Create an Account if you do not have one yet.", Red);
 				system("pause");
@@ -169,31 +171,31 @@ void MenuInterface::Run()
 			{
 				ConsoleUtil::WriteLine("ACCESS GRANTED:  Loading Main Menu...", Green);
 				system("pause");
-				is_Authenticated = true;
+				is_authenticated = true;
 			}
 		}
 	}
 
-	if (acc_Reference.GetCurrentUser() != nullptr)
+	if (acc_reference.GetCurrentUser() != nullptr)
 	{
-		while (is_Running == true)
+		while (is_running)
 		{
 			ConsoleUtil::WriteLine("(*Dev Tip: Press '9' to execute monthly interest cycle*)", Yellow);
 
 			DisplayMainMenu();
 			ConsoleUtil::Write("Enter Option: ", Magenta);
-			std::cin >> userInput;
+			std::cin >> user_input;
 			std::cin.ignore();
 			
-			if (userInput == 9)
+			if (user_input == 9)
 			{
-				acc_Reference.RunGlobalInterestSweep();
+				acc_reference.RunGlobalInterestSweep();
 				ConsoleUtil::WriteLine("It is a new month! Check your new balance!", Green);
 				system("pause");
 			}
 			else
 			{
-				HandleSelection((MenuInterface::MenuOption)userInput);
+				HandleSelection((MenuInterface::MenuOption)user_input);
 
 				std::cin.ignore(1000, '\n');
 			}
