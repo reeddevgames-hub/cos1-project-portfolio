@@ -12,6 +12,12 @@ void AccountManager::AccountCreation(int id_number, const char* users_name, doub
 	master_registry.push_back(new_account);
 }
 
+// This function instantly copies the entire list of loaded memory pointers to the master registry.
+void AccountManager::InitializeRegistry(const std::vector<Account*>& loaded_accounts)
+{
+	master_registry = loaded_accounts;
+}
+
 // Makes you have to use your ID number and security pin to verify the account is yours.
 bool AccountManager::LoginVerification(int id_num, int secure_pin)
 {

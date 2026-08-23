@@ -6,8 +6,8 @@
 
 int main()
 {
-	AccountManager bankMasterDatabase;
+	AccountManager bank_master_database;
 
-	MenuInterface bank_Application(bankMasterDatabase);
-	bank_Application.Run();
+	MenuInterface bank_application(bank_master_database);
+	bank_application.Run();
 }

@@ -80,6 +80,9 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		break;
 
 	case MenuInterface::Exit:
+		// Save the account information before exiting the application.
+		storage_manager.SaveAccountInterface(acc_reference.GetMasterRegistry());
+
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::WriteLine("========================================", Red);
 		ConsoleUtil::WriteLine(" Thank you for banking with Energy Bank ", Cyan);
@@ -138,10 +141,11 @@ void MenuInterface::HandleLogin(bool& is_authenticated)
 	}
 }
 
-
-
 void MenuInterface::Run()
 {
+	// Load any saved data from the binary database file on bootup of the application.
+	acc_reference.InitializeRegistry(storage_manager.LoadAccountInterface());
+
 	bool is_authenticated = false;
 
 	while (!is_authenticated)

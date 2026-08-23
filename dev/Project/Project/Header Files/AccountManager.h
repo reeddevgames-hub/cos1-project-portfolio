@@ -35,4 +35,6 @@ public:
 
 	// Disables the Copy Assignment Operator in order to stop an existing manager from copying data from another manager.
 	AccountManager& operator=(const AccountManager&) = delete;
+
+	void InitializeRegistry(const std::vector<Account*>& loaded_accounts);
 };

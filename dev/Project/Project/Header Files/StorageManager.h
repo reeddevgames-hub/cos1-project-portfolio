@@ -10,7 +10,7 @@ struct AccountRecord
 	int security_pin;
 	double account_balance;
 	double account_interest_rate;
-	int account_type_id             // 1 for Checking, 2 for Savings.
+	int account_type_id;             // 1 for Checking, 2 for Savings.
 };
 
 class StorageManager
