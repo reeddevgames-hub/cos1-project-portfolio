@@ -1,0 +1,157 @@
+#include "AccountManager.h"
+
+AccountManager::AccountManager()
+{
+	current_user = nullptr;
+}
+
+// Helps create multiple accounts and passes them inteor the master_registry vector for storage.
+void AccountManager::AccountCreation(int id_number, const char* users_name, double initial_deposit, Account::AccountType account_type, double interest_rate, int security_pin)
+{
+	Account* new_account = new Account(id_number, users_name, initial_deposit, account_type, interest_rate, security_pin);
+	master_registry.push_back(new_account);
+}
+
+// This function instantly copies the entire list of loaded memory pointers to the master registry.
+void AccountManager::InitializeRegistry(const std::vector<Account*>& loaded_accounts)
+{
+	master_registry = loaded_accounts;
+}
+
+// Makes you have to use your ID number and security pin to verify the account is yours.
+bool AccountManager::LoginVerification(int id_num, int secure_pin)
+{
+	for (Account* acc : master_registry)
+	{
+		current_user = (acc->GetAccountNumber() == id_num && acc->GetPin() == secure_pin) ? acc : current_user;
+
+		if (current_user == acc)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+// Lets you log out of the account.
+void AccountManager::Logout()
+{
+	current_user = nullptr;
+}
+
+// This allows you to search for an account to see if it is there for when you want to transfer to a different account.
+Account* AccountManager::PrivateAccountFinder(int id_number)
+{
+	for (Account* acc : master_registry)
+	{
+		if ( acc->GetAccountNumber() == id_number)
+		{
+			return acc;
+		}
+	}
+	return nullptr;
+}
+
+// This runs your transfer function after finding the account then allows you to transfer to that account.
+bool AccountManager::TranferCoordinator(int destination_id, double sending_amount)
+{
+	if (current_user == nullptr)
+	{
+		return false;
+	}
+	Account* recieving_account = PrivateAccountFinder(destination_id);
+	
+	if (recieving_account != nullptr)
+	{
+		return current_user->Transfer(*recieving_account, sending_amount);
+	}
+	return false;
+}
+
+// This function works as a fast track to the "next month" when you use an account with interest and it will add said interest agains the amount in your current balance.
+void AccountManager::RunGlobalInterestSweep()
+{
+	for (Account* acc : master_registry)
+	{
+		acc->ApplyInterest();
+	}
+}
+
+// Getters
+Account* AccountManager::GetCurrentUser()const
+{
+	return current_user;
+}
+
+const std::vector<Account*>& AccountManager::GetMasterRegistry()const
+{
+	return master_registry;
+}
+
+// Destructor
+AccountManager::~AccountManager()
+{
+	for (Account* acc : master_registry)
+	{
+		delete acc;
+	}
+	master_registry.clear();
+}
+
+void AccountManager::PrintTransferRegistry() const
+{
+	ConsoleUtil::WriteLine("======= PUBLIC BANK TRANSFER DIRECTORY =======", Yellow);
+
+	for (Account* acc : master_registry)
+	{
+		// GUARD CLAUSE: Skip the user's own active account profile in the public directory list.
+		if (acc == current_user)
+		{
+			continue;
+		}
+		ConsoleUtil::Write("Account Holder: ", Cyan);
+		ConsoleUtil::Write(acc->GetAccountHolderName(), Cyan);
+		ConsoleUtil::Write("	|	Transfer Destination ID:  ", Magenta);
+		ConsoleUtil::WriteLine(std::to_string(acc->GetAccountNumber()), Green);
+	}
+
+	ConsoleUtil::WriteLine("==============================================", Yellow);
+	ConsoleUtil::WriteLine();
+
+	if (current_user != nullptr)
+	{
+		ConsoleUtil::WriteLine("=============== YOUR INFORMATION ===============", Cyan);
+		ConsoleUtil::Write("Account Holder: ", Cyan);
+		ConsoleUtil::Write(current_user->GetAccountHolderName(), Cyan);
+		ConsoleUtil::Write("	|	Transfer Destination ID:  ", Magenta);
+		ConsoleUtil::WriteLine(std::to_string(current_user->GetAccountNumber()), Green);
+		ConsoleUtil::WriteLine("==============================================", Cyan);
+	}
+}
+
+void AccountManager::CreateLinkedSubAccount(Account::AccountType account_type, double opening_deposit, double interest_rate)
+{
+	if (current_user == nullptr) { return; }
+
+	int generated_id = 0;
+	bool is_unique = false;
+
+	while (!is_unique)
+	{
+		generated_id = 2000 + (master_registry.size() * 17) % 7000;
+		is_unique = true;
+		
+		for (Account* acc : master_registry)
+		{
+			is_unique = (acc->GetAccountNumber() == generated_id) ? false : is_unique;
+			if (is_unique) { break; }
+		}
+	}
+
+	Account* linked_sub_account = new Account(generated_id, current_user->GetAccountHolderName(), opening_deposit, account_type, interest_rate, current_user->GetPin());
+	master_registry.push_back(linked_sub_account);
+
+	ConsoleUtil::WriteLine();
+	ConsoleUtil::Write("SUCCESS: Sub-Account Opened! Your New 4-Digit Account ID is: ", Green);
+	ConsoleUtil::WriteLine(std::to_string(generated_id), Yellow);
+}
