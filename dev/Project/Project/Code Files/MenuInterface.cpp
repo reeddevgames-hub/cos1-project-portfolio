@@ -91,8 +91,19 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 	case MenuInterface::CreateSubAccount:
 	{
 		ConsoleUtil::WriteLine();
+		ConsoleUtil::WriteLine("======= OPEN AN ADDITIONAL SUB-ACCOUNT =======", Cyan);
+		ConsoleUtil::WriteLine("Select Account Type:", Cyan);
+		ConsoleUtil::WriteLine("1. Checking \n2. Savings", Cyan);
 
-		ConsoleUtil::WriteLine("Sub-account route varified!", Green);
+		int sub_type_choice = InputFilter::SafeInteger("Enter # Choice (1 or 2): ", "Error: Selection invalid! Please select 1 or 2.");
+
+		Account::AccountType sub_chosen_type = (sub_type_choice == 2) ? Account::Savings : Account::Checking;
+		double sub_interest_rate = (sub_type_choice == 2) ? 0.05 : 0.0;
+
+		double sub_initial_deposit = InputFilter::SafePositiveDouble("Please Enter Your Opening Deposit Amount: $", "Error: Opening balances must be positive numbers.");
+
+		acc_reference.CreateLinkedSubAccount(sub_chosen_type, sub_initial_deposit, sub_interest_rate);
+
 		system("pause");
 		ConsoleUtil::WriteLine();
 		break;

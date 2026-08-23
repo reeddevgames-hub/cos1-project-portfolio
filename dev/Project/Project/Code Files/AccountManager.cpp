@@ -128,3 +128,30 @@ void AccountManager::PrintTransferRegistry() const
 		ConsoleUtil::WriteLine("==============================================", Cyan);
 	}
 }
+
+void AccountManager::CreateLinkedSubAccount(Account::AccountType account_type, double opening_deposit, double interest_rate)
+{
+	if (current_user == nullptr) { return; }
+
+	int generated_id = 0;
+	bool is_unique = false;
+
+	while (!is_unique)
+	{
+		generated_id = 2000 + (master_registry.size() * 17) % 7000;
+		is_unique = true;
+		
+		for (Account* acc : master_registry)
+		{
+			is_unique = (acc->GetAccountNumber() == generated_id) ? false : is_unique;
+			if (is_unique) { break; }
+		}
+	}
+
+	Account* linked_sub_account = new Account(generated_id, current_user->GetAccountHolderName(), opening_deposit, account_type, interest_rate, current_user->GetPin());
+	master_registry.push_back(linked_sub_account);
+
+	ConsoleUtil::WriteLine();
+	ConsoleUtil::Write("SUCCESS: Sub-Account Opened! Your New 4-Digit Account ID is: ", Green);
+	ConsoleUtil::WriteLine(std::to_string(generated_id), Yellow);
+}

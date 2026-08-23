@@ -39,4 +39,6 @@ public:
 	void InitializeRegistry(const std::vector<Account*>& loaded_accounts);
 
 	void PrintTransferRegistry() const;
+
+	void CreateLinkedSubAccount(Account::AccountType account_type, double opening_deposit, double interest_rate);
 };

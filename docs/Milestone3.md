@@ -6,8 +6,8 @@
 
 → **Binary Data Stream Engine**: Programmed a complete binary initialization engine 'StorageManager' that converts running data arrays into safe 'reinterpret_cast' binary byte-stream allocations on disk.
 → **Primitive Struct Data Contract**: Designed a struct 'AccountRecord' data blueprint utilizing fixed-size character arrays ('char[]') to ensure a permanent, predictable memory footprint for crash-free serialization within the StorageManager.
-→ 
-→ 
+→ **Non-Secure Public Routing Directory**: Created a secure directory view system that displays public account holder names and destination ID metrics while successfully screening out personal session vectors to prevent accidental internal loops all within the transfer menu choice.
+→ **Automated Profile Sub-Account Linking**: Built an account linkage engine that pulls authentication credentials straight from active pointer sessions (the active user profile information), spawning fresh heap allocations without demanding redundant data reentry.
 → 
 → 
 
@@ -37,7 +37,7 @@
 → **Eliminated Global Variable Nesting**: Refactored user interface variables (such as 'type_choice', 'user_pin', and 'initial_deposit') away from the 'Run()' function storage and re-declared them locally within their processing functions. This ensures data state variables remain confined strictly to the blocks where they are actively used.
 → **Copy Lifecycle Operations**: Placed explicit '= delete' restrictions on the Copy Constructor and Copy Assignment Operator inside the 'AccountManager.h' header. This disables the ability to initialize or overwrite a manager as a direct copy of an existing instance, sealing the class against duplicate memory tracking and eliminating heap corruption crashes.
 → **Implemented Class Destructor**: Implemented the class Destructor in the AccountManager class header file to properly delete heap allocated pointers on shutdown of the application.
-→ 
+→ **Streamlined Control Evaluation Paths**: Replaced the nested if statements inside the login and creation functions with compact ternary statements to save space and clean up code logic.
 → 
 → 
 → 
