@@ -2,28 +2,26 @@
 
 AccountManager::AccountManager()
 {
-	currentUser = nullptr;
+	current_user = nullptr;
 }
 
 // Helps create multiple accounts and passes them inteor the master_registry vector for storage.
-void AccountManager::AccountCreation(int IDNumber, const char* usersName, double initialDeposit, Account::AccountType acc_Type, double interestRate, int securityPin)
+void AccountManager::AccountCreation(int id_number, const char* users_name, double initial_deposit, Account::AccountType account_type, double interest_rate, int security_pin)
 {
-	Account newAccount(IDNumber, usersName, initialDeposit, acc_Type, interestRate, securityPin);
-	master_Registry.push_back(newAccount);
+	Account* new_account = new Account(id_number, users_name, initial_deposit, account_type, interest_rate, security_pin);
+	master_registry.push_back(new_account);
 }
 
 // Makes you have to use your ID number and security pin to verify the account is yours.
-bool AccountManager::LoginVerification(int IDNum, int securePin)
+bool AccountManager::LoginVerification(int id_num, int secure_pin)
 {
-	for (Account& acc : master_Registry)
+	for (Account* acc : master_registry)
 	{
-		if (acc.GetAccountNumber() == IDNum)
+		current_user = (acc->GetAccountNumber() == id_num && acc->GetPin() == secure_pin) ? acc : current_user;
+
+		if (current_user == acc)
 		{
-			if (acc.GetPin() == securePin)
-			{
-				currentUser = &acc;
-				return true;
-			}
+			return true;
 		}
 	}
 	return false;
@@ -32,34 +30,34 @@ bool AccountManager::LoginVerification(int IDNum, int securePin)
 // Lets you log out of the account.
 void AccountManager::Logout()
 {
-	currentUser = nullptr;
+	current_user = nullptr;
 }
 
 // This allows you to search for an account to see if it is there for when you want to transfer to a different account.
-Account* AccountManager::PrivateAccountFinder(int IDNumber1)
+Account* AccountManager::PrivateAccountFinder(int id_number)
 {
-	for (Account& acc : master_Registry)
+	for (Account* acc : master_registry)
 	{
-		if ( acc.GetAccountNumber() == IDNumber1)
+		if ( acc->GetAccountNumber() == id_number)
 		{
-			return &acc;
+			return acc;
 		}
 	}
 	return nullptr;
 }
 
 // This runs your transfer function after finding the account then allows you to transfer to that account.
-bool AccountManager::TranferCoordinator(int destination_IDNum, double sending_Amount)
+bool AccountManager::TranferCoordinator(int destination_id, double sending_amount)
 {
-	if (currentUser == nullptr)
+	if (current_user == nullptr)
 	{
 		return false;
 	}
-	Account* recieving_Account = PrivateAccountFinder(destination_IDNum);
+	Account* recieving_account = PrivateAccountFinder(destination_id);
 	
-	if (recieving_Account != nullptr)
+	if (recieving_account != nullptr)
 	{
-		return currentUser->Transfer(*recieving_Account, sending_Amount);
+		return current_user->Transfer(*recieving_account, sending_amount);
 	}
 	return false;
 }
@@ -67,19 +65,29 @@ bool AccountManager::TranferCoordinator(int destination_IDNum, double sending_Am
 // This function works as a fast track to the "next month" when you use an account with interest and it will add said interest agains the amount in your current balance.
 void AccountManager::RunGlobalInterestSweep()
 {
-	for (Account& acc : master_Registry)
+	for (Account* acc : master_registry)
 	{
-		acc.ApplyInterest();
+		acc->ApplyInterest();
 	}
 }
 
 // Getters
 Account* AccountManager::GetCurrentUser()const
 {
-	return currentUser;
+	return current_user;
 }
 
-const std::vector<Account>& AccountManager::GetMasterRegistry()const
+const std::vector<Account*>& AccountManager::GetMasterRegistry()const
 {
-	return master_Registry;
+	return master_registry;
+}
+
+// Destructor
+AccountManager::~AccountManager()
+{
+	for (Account* acc : master_registry)
+	{
+		delete acc;
+	}
+	master_registry.clear();
 }
