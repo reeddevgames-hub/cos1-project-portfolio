@@ -8,8 +8,6 @@
 → **Primitive Struct Data Contract**: Designed a struct 'AccountRecord' data blueprint utilizing fixed-size character arrays ('char[]') to ensure a permanent, predictable memory footprint for crash-free serialization within the StorageManager.
 → **Non-Secure Public Routing Directory**: Created a secure directory view system that displays public account holder names and destination ID metrics while successfully screening out personal session vectors to prevent accidental internal loops all within the transfer menu choice.
 → **Automated Profile Sub-Account Linking**: Built an account linkage engine that pulls authentication credentials straight from active pointer sessions (the active user profile information), spawning fresh heap allocations without demanding redundant data reentry.
-→ 
-→ 
 
 ---
 
@@ -19,10 +17,6 @@
 → **Enforced Explicit Pointer Containment**: Changed the master registry vector from storing raw Account objects to storing Account pointers ('Account*') inside the header file. This stops object slicing and makes the vector run faster when resizing our database elements.
 → **Integrated Persistent File Synchronization**: Created access hooks inside MenuInterface.cpp to load saved binary accounts automatically on application startup and save registry updates when selecting the exit option.
 → **Dynamic Multi-Account Dashboard**: Updated the main menu screen to loop through the master registry and print the account ID, type, and balance for every account belonging to the logged-in user.
-→ 
-→ 
-→ 
-→ 
 
 ---
 
@@ -38,10 +32,5 @@
 → **Copy Lifecycle Operations**: Placed explicit '= delete' restrictions on the Copy Constructor and Copy Assignment Operator inside the 'AccountManager.h' header. This disables the ability to initialize or overwrite a manager as a direct copy of an existing instance, sealing the class against duplicate memory tracking and eliminating heap corruption crashes.
 → **Implemented Class Destructor**: Implemented the class Destructor in the AccountManager class header file to properly delete heap allocated pointers on shutdown of the application.
 → **Streamlined Control Evaluation Paths**: Replaced the nested if statements inside the login and creation functions with compact ternary statements to save space and clean up code logic.
-→ 
-→ 
-→ 
-→ 
-→ 
 
 ---
