@@ -23,7 +23,8 @@ void MenuInterface:: DisplayMainMenu()
 	ConsoleUtil::WriteLine("0. Deposit Funds", Magenta);
 	ConsoleUtil::WriteLine("1. Withdraw Funds", Magenta);
 	ConsoleUtil::WriteLine("2. Transfer Money", Magenta);
-	ConsoleUtil::WriteLine("3. Exit Banking App", Magenta);
+	ConsoleUtil::WriteLine("3. Open a New Sub-Account", Magenta);
+	ConsoleUtil::WriteLine("4. Exit Banking App", Magenta);
 }
 
 // Using enum MenuOption, makes a switch statement for each choice if chosen.
@@ -32,6 +33,7 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 	switch (option)
 	{
 	case MenuInterface::Deposit:
+	{
 		double deposit_amount;
 		ConsoleUtil::WriteLine();
 		deposit_amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Invalid format! You must enter a positive decimal number.");
@@ -43,8 +45,10 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		}
 		system("pause");
 		break;
+	}
 
 	case MenuInterface::Withdraw:
+	{
 		double withdraw_amount;
 		ConsoleUtil::WriteLine();
 		withdraw_amount = InputFilter::SafePositiveDouble("Please Enter a Positive Amount: $", "Error: Cash quantity must be a positive number.");
@@ -57,12 +61,16 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		system("pause");
 		ConsoleUtil::WriteLine();
 		break;
+	}
 
 	case MenuInterface::Transfer:
+	{
 		int destinationacc_id;
 		double sent_amount;
 
+		acc_reference.PrintTransferRegistry();
 		ConsoleUtil::WriteLine();
+
 		destinationacc_id = InputFilter::SafeInteger("Please Enter the Recipient 4 - Digit Account ID Number : ", "Error: IDs must consist of only numeric digits.");
 		ConsoleUtil::WriteLine();
 		sent_amount = InputFilter::SafePositiveDouble("Please Enter a POSITIVE amount to transfer: ", "Error: You cannot send a negative amount or 0.0 dollars.");
@@ -78,8 +86,20 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		system("pause");
 		ConsoleUtil::WriteLine();
 		break;
+	}
+
+	case MenuInterface::CreateSubAccount:
+	{
+		ConsoleUtil::WriteLine();
+
+		ConsoleUtil::WriteLine("Sub-account route varified!", Green);
+		system("pause");
+		ConsoleUtil::WriteLine();
+		break;
+	}
 
 	case MenuInterface::Exit:
+	{
 		// Save the account information before exiting the application.
 		storage_manager.SaveAccountInterface(acc_reference.GetMasterRegistry());
 
@@ -90,6 +110,7 @@ void MenuInterface::HandleSelection(MenuInterface::MenuOption option)
 		ConsoleUtil::WriteLine("========================================", Red);
 		is_running = false;
 		break;
+	}
 	}
 }
 

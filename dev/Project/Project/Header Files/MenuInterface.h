@@ -13,6 +13,7 @@ public:
 		Deposit,
 		Withdraw,
 		Transfer,
+		CreateSubAccount,
 		Exit
 	};
 
