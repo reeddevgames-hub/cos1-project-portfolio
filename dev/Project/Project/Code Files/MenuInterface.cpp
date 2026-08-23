@@ -11,15 +11,33 @@ void MenuInterface:: DisplayMainMenu()
 {
 	// Display User Account Info. 
 	ConsoleUtil::WriteLine("========================================", Red);
-	ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Your Current Account Information ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
-	ConsoleUtil::Write("Account Holder: ", Cyan); ConsoleUtil::WriteLine(acc_reference.GetCurrentUser()->GetAccountHolderName(), Cyan);
-	ConsoleUtil::Write("Current Balance: $", Cyan); ConsoleUtil::WriteLine(std::to_string(acc_reference.GetCurrentUser()->GetAccountBalance()), Green);
+	ConsoleUtil::Write("== ", Red); 
+	ConsoleUtil::Write(" Your Current Account Information ", Cyan); 
+	ConsoleUtil::WriteLine(" ==", Red);
+	
+	std::string profile_holder = acc_reference.GetCurrentUser()->GetAccountHolderName();
+	ConsoleUtil::Write("Account Holder: ", Cyan); 
+	ConsoleUtil::WriteLine(profile_holder, Cyan);
+	ConsoleUtil::WriteLine("----------------------------------------", Red);
+
+	for (Account* acc : acc_reference.GetMasterRegistry())
+	{
+		if (acc->GetAccountHolderName() == profile_holder)
+		{
+			std::string account_type_label = (acc->GetAccountType() == Account::Savings) ? "Savings" : "Checking";
+
+			ConsoleUtil::Write("Account ID: " + std::to_string(acc->GetAccountNumber()) + " (" + account_type_label + ") | Balance: $", Cyan);
+			ConsoleUtil::WriteLine(std::to_string(acc->GetAccountBalance()), Green);
+		}
+	}
 	ConsoleUtil::WriteLine("========================================", Red);
 	ConsoleUtil::WriteLine();
 
 	// Display Main Menu. 
 	ConsoleUtil::WriteLine("========================================", Yellow);
-	ConsoleUtil::Write("== ", Yellow); ConsoleUtil::Write(" Choose From a Menu Option Below. ", Magenta); ConsoleUtil::WriteLine(" ==", Yellow);
+	ConsoleUtil::Write("== ", Yellow); 
+	ConsoleUtil::Write(" Choose From a Menu Option Below. ", Magenta); 
+	ConsoleUtil::WriteLine(" ==", Yellow);
 	ConsoleUtil::WriteLine("0. Deposit Funds", Magenta);
 	ConsoleUtil::WriteLine("1. Withdraw Funds", Magenta);
 	ConsoleUtil::WriteLine("2. Transfer Money", Magenta);

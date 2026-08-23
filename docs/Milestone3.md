@@ -18,7 +18,7 @@
 → **Cleaned up the loop syntax**: Stripped out the boolean values that added extra code like ("while (is_authenticated == true), if (is_running == false") and updated them to this ("while(!is_authenticated), and if(!is_running)") and added a base definition for is_running set to true in the constructor. 
 → **Enforced Explicit Pointer Containment**: Changed the master registry vector from storing raw Account objects to storing Account pointers ('Account*') inside the header file. This stops object slicing and makes the vector run faster when resizing our database elements.
 → **Integrated Persistent File Synchronization**: Created access hooks inside MenuInterface.cpp to load saved binary accounts automatically on application startup and save registry updates when selecting the exit option.
-→ 
+→ **Dynamic Multi-Account Dashboard**: Updated the main menu screen to loop through the master registry and print the account ID, type, and balance for every account belonging to the logged-in user.
 → 
 → 
 → 
