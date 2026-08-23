@@ -48,7 +48,18 @@ What Next : This next week I plan on working on my storageManager class so i can
 
 ### Week 3
 
-Stay tuned, this stand up is coming soon...
+  Weekly Stand-Up
+ Overview - What I worked on this past week:
+This week, I focused on setting up a database layer for the banking app. I changed the master registry vector from storing raw Account objects to storing Account pointers (Account*) inside the header file. I also created a binary file synchronization inside MenuInterface.cpp to load saved binary accounts automatically on application startup and save registry updates when selecting the exit option.
+
+ Challenges - What problems did I have & how I'm addressing them:
+Changing the master registry vector over to track pointers broke my old search loops and validation functions, throwing multiple compiler errors. I addressed this by refactoring my processing loops to swap out standard dot operators for pointer arrow operators. I also fixed a missing semicolon syntax typo inside the StorageManager.h file that was causing some build failures.
+
+ Accomplishments - What is something I "leveled up" on this week:
+I leveled up on C++ memory safety and cleaning up code logic. I implemented the class Destructor in the AccountManager class to properly delete heap allocated pointers on shutdown, and placed explicit '= delete' restrictions on the Copy Constructor and Copy Assignment Operator to stop any abrupt crashes. I also replaced nested if statements with compact ternary statements to save space (Which i also found neat since I forgot you could use ternary statements).
+
+ Next Steps - What I plan to prioritize and do next
+Now that the main menu screen loops through the master registry and prints the account ID, type, and balance for every account belonging to the logged-in user, my next step is upgrading my transactions. I plan to add a quick prompt inside our deposit and withdrawal options so users can select exactly which account ID they want to modify during their session.
 
 ### Week 4
 
