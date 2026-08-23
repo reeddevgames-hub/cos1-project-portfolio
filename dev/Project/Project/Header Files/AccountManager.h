@@ -1,7 +1,7 @@
 #pragma once
 #include<vector>
 #include"Account.h"
-
+#include"ConsoleUtil.h"
 
 // This will be where multiple accounts can be stored together in a vector after they are created.
 class AccountManager
@@ -37,4 +37,6 @@ public:
 	AccountManager& operator=(const AccountManager&) = delete;
 
 	void InitializeRegistry(const std::vector<Account*>& loaded_accounts);
+
+	void PrintTransferRegistry() const;
 };

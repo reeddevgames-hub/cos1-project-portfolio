@@ -17,7 +17,7 @@
 
 → **Cleaned up the loop syntax**: Stripped out the boolean values that added extra code like ("while (is_authenticated == true), if (is_running == false") and updated them to this ("while(!is_authenticated), and if(!is_running)") and added a base definition for is_running set to true in the constructor. 
 → **Enforced Explicit Pointer Containment**: Changed the master registry vector from storing raw Account objects to storing Account pointers ('Account*') inside the header file. This stops object slicing and makes the vector run faster when resizing our database elements.
-→ 
+→ **Integrated Persistent File Synchronization**: Created access hooks inside MenuInterface.cpp to load saved binary accounts automatically on application startup and save registry updates when selecting the exit option.
 → 
 → 
 → 
@@ -28,7 +28,7 @@
 
 ### Refactoring Improvments:
 
-→ **Standardized Coding Conventions**: Refactored function input arguments and structural signatures to strickly use 'snake_case' style. what is updated so far is Account.h, Account.cpp, MenuInterface.h, MenuInterface.cpp, StorageManager.h, StorageManager.cpp, AccountManager.h, and AccountManager.cpp files.
+→ **Standardized Coding Conventions**: Refactored function input arguments and structural signatures to strickly use 'snake_case' style. what is updated so far is Account.h, Account.cpp, MenuInterface.h, MenuInterface.cpp, StorageManager.h, StorageManager.cpp, AccountManager.h, AccountManager.cpp, and main.cpp files files.
 → **Eliminated Magic Numbers**: Replaced hardcoded array size allocations ('50') inside the 'strcpy_s' from the constructor code block with the more dynamic 'sizeof(holder_name)' code. This will reduce structural dependencies and prevent memory trunication bugs if the array character storage size is ever altered in the future.
 → **Removed Hardcoded Default Parameters**: Removed the default values of ('= 0.0' and '= 0000') from the Account.h constructor. This folows Clean Code by removing hardcoded magic values, enforces explicit initilization, and stops possible c++ syntax issues with leading zeros compliling into base-8 octal literals.
 → **Implemented Conditional Guard Clauses**: Restructured transactional code within Deposit, Withdraw, and Transfer functions. These methods now use guard clauses to handle error conditions first and exit early, which eliminates un-needed else blocks and cleans up the code logic.

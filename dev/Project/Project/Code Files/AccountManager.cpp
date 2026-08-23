@@ -97,3 +97,34 @@ AccountManager::~AccountManager()
 	}
 	master_registry.clear();
 }
+
+void AccountManager::PrintTransferRegistry() const
+{
+	ConsoleUtil::WriteLine("======= PUBLIC BANK TRANSFER DIRECTORY =======", Yellow);
+
+	for (Account* acc : master_registry)
+	{
+		// GUARD CLAUSE: Skip the user's own active account profile in the public directory list.
+		if (acc == current_user)
+		{
+			continue;
+		}
+		ConsoleUtil::Write("Account Holder: ", Cyan);
+		ConsoleUtil::Write(acc->GetAccountHolderName(), Cyan);
+		ConsoleUtil::Write("	|	Transfer Destination ID:  ", Magenta);
+		ConsoleUtil::WriteLine(std::to_string(acc->GetAccountNumber()), Green);
+	}
+
+	ConsoleUtil::WriteLine("==============================================", Yellow);
+	ConsoleUtil::WriteLine();
+
+	if (current_user != nullptr)
+	{
+		ConsoleUtil::WriteLine("=============== YOUR INFORMATION ===============", Cyan);
+		ConsoleUtil::Write("Account Holder: ", Cyan);
+		ConsoleUtil::Write(current_user->GetAccountHolderName(), Cyan);
+		ConsoleUtil::Write("	|	Transfer Destination ID:  ", Magenta);
+		ConsoleUtil::WriteLine(std::to_string(current_user->GetAccountNumber()), Green);
+		ConsoleUtil::WriteLine("==============================================", Cyan);
+	}
+}
