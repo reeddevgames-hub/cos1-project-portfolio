@@ -15,48 +15,48 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Code Files\MenuInterface.cpp">
+    <ClCompile Include="Account.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code Files\StorageManager.cpp">
+    <ClCompile Include="AccountManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code Files\main.cpp">
+    <ClCompile Include="ConsoleUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code Files\InputFilter.cpp">
+    <ClCompile Include="InputFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code Files\ConsoleUtil.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code Files\AccountManager.cpp">
+    <ClCompile Include="MenuInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code Files\Account.cpp">
+    <ClCompile Include="StorageManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header Files\Helper.h">
+    <ClInclude Include="Account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Account.h">
+    <ClInclude Include="AccountManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\AccountManager.h">
+    <ClInclude Include="ConsoleUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\ConsoleUtil.h">
+    <ClInclude Include="Helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\InputFilter.h">
+    <ClInclude Include="InputFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\MenuInterface.h">
+    <ClInclude Include="MenuInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\StorageManager.h">
+    <ClInclude Include="StorageManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

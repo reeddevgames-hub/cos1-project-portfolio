@@ -18,6 +18,24 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Account.cpp" />
+    <ClCompile Include="AccountManager.cpp" />
+    <ClCompile Include="ConsoleUtil.cpp" />
+    <ClCompile Include="InputFilter.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuInterface.cpp" />
+    <ClCompile Include="StorageManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Account.h" />
+    <ClInclude Include="AccountManager.h" />
+    <ClInclude Include="ConsoleUtil.h" />
+    <ClInclude Include="Helper.h" />
+    <ClInclude Include="InputFilter.h" />
+    <ClInclude Include="MenuInterface.h" />
+    <ClInclude Include="StorageManager.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -140,24 +158,6 @@
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Code Files\Account.cpp" />
-    <ClCompile Include="Code Files\AccountManager.cpp" />
-    <ClCompile Include="Code Files\ConsoleUtil.cpp" />
-    <ClCompile Include="Code Files\InputFilter.cpp" />
-    <ClCompile Include="Code Files\main.cpp" />
-    <ClCompile Include="Code Files\MenuInterface.cpp" />
-    <ClCompile Include="Code Files\StorageManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Header Files\Account.h" />
-    <ClInclude Include="Header Files\AccountManager.h" />
-    <ClInclude Include="Header Files\ConsoleUtil.h" />
-    <ClInclude Include="Header Files\Helper.h" />
-    <ClInclude Include="Header Files\InputFilter.h" />
-    <ClInclude Include="Header Files\MenuInterface.h" />
-    <ClInclude Include="Header Files\StorageManager.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
