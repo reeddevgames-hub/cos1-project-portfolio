@@ -2,75 +2,75 @@
 #include"ConsoleUtil.h"
 #include<iostream>
  
-int InputFilter::SafeInteger(const char* promptMessage, const char* errorMessage)
+int InputFilter::SafeInteger(const char* prompt_message, const char* error_message)
 {
-	int validatedValue;
+	int validated_value;
 
 	while(true)
 	{
-		ConsoleUtil::Write(promptMessage, Cyan);
-		std::cin >> validatedValue;
+		ConsoleUtil::Write(prompt_message, Cyan);
+		std::cin >> validated_value;
 		if (std::cin.fail())
 		{
 			std::cin.clear();
 			std::cin.ignore(1000, '\n');
 
-			ConsoleUtil::WriteLine(errorMessage, Red);
+			ConsoleUtil::WriteLine(error_message, Red);
 			system("pause");
 
 		}
 		else
 		{
 			std::cin.ignore(1000, '\n');
-			return validatedValue;
+			return validated_value;
 		}
 	}
 }
 
-double InputFilter::SafePositiveDouble(const char* promptMessage, const char* errorMessage)
+double InputFilter::SafePositiveDouble(const char* prompt_message, const char* error_message)
 {
-	double validatedMoney;
+	double validated_money;
 
 	while(true)
 	{
-		ConsoleUtil::Write(promptMessage, Cyan);
-		std::cin >> validatedMoney;
+		ConsoleUtil::Write(prompt_message, Cyan);
+		std::cin >> validated_money;
 
-		if (std::cin.fail() || validatedMoney <= 0.0)
+		if (std::cin.fail() || validated_money <= 0.0)
 		{
 			std::cin.clear();
 			std::cin.ignore(1000, '\n');
 
-			ConsoleUtil::WriteLine(errorMessage, Red);
+			ConsoleUtil::WriteLine(error_message, Red);
 			system("pause");
 
 		}
 		else
 		{
 			std::cin.ignore(1000, '\n');
-			return validatedMoney;
+			return validated_money;
 		}
 	}
 }
 
-std::string InputFilter::SafeString(const char* promptMessage, const char* errorMessage)
+std::string InputFilter::SafeString(const char* prompt_message, const char* error_message)
 {
-	std::string validatedText;
+	std::string validated_text;
 
 	while (true)
 	{
-		ConsoleUtil::Write(promptMessage, Cyan);
-		std::getline(std::cin, validatedText);
+		ConsoleUtil::Write(prompt_message, Cyan);
+		std::getline(std::cin, validated_text);
 
-		if (validatedText.empty())
+		if (validated_text.empty())
 		{
-			ConsoleUtil::WriteLine(errorMessage, Red);
+			ConsoleUtil::WriteLine(error_message, Red);
 			system("pause");
 
 		}
 		else
 		{
-			return validatedText;
+			return validated_text;
 		}
 	}
 }

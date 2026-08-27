@@ -1,0 +1,1 @@
+Updated Variables names to take on snake_case style formation.
