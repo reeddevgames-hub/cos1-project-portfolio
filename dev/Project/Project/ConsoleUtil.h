@@ -20,9 +20,7 @@ class ConsoleUtil
 {
 public:
 
-    static void Write(std::string message, ConsoleColor color);
-
-    static void WriteLine(std::string message, ConsoleColor color);
-
+    static void Write(std::string message_text, ConsoleColor text_color);
+    static void WriteLine(std::string message_text, ConsoleColor text_color);
     static void WriteLine();
 };

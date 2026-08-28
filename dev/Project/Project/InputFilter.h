@@ -15,8 +15,6 @@ public:
 	// Will be used to filter out any invalid inputs and loop till a string input is accepted. 
 	static std::string SafeString(const char* prompt_message, const char* error_message);
 
-private:
-
 	// Replacement for the nostant system("pause")
 	static void pause_execution();
 };

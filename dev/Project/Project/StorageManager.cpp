@@ -2,8 +2,8 @@
 #include<fstream>
 #include<cstring>
 
-// Saving Information to Binary FIle.
-bool StorageManager::SaveAccountInterface(const std::vector<Account*>& reference)
+// Saving Information to Binary File.
+bool StorageManager::SaveAccountInterface(const std::vector<Account*>& account_registry)
 {
 	// Attempts to open file.
 	std::ofstream out_file(filename, std::ios::out | std::ios::binary | std::ios::trunc);
@@ -15,7 +15,7 @@ bool StorageManager::SaveAccountInterface(const std::vector<Account*>& reference
 	}
 
 	// Loop to translate to binary and map it to the Getters to get the required information.
-	for (const auto& account_ptr : reference)
+	for (const auto& account_ptr : account_registry)
 	{
 		AccountRecord record;
 

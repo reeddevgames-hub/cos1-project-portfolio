@@ -53,7 +53,7 @@ Account* AccountManager::PrivateAccountFinder(int id_number)
 }
 
 // This runs your transfer function after finding the account then allows you to transfer to that account.
-bool AccountManager::TranferCoordinator(int destination_id, double sending_amount)
+bool AccountManager::TransferCoordinator(int destination_id, double sending_amount)
 {
 	if (current_user == nullptr)
 	{

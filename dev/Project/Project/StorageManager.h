@@ -19,7 +19,7 @@ private:
 	const char* filename =  "banking_database.dat";
 
 public:
-	bool SaveAccountInterface(const std::vector<Account*>& reference);
+	bool SaveAccountInterface(const std::vector<Account*>& account_registry);
 
 	std::vector<Account*> LoadAccountInterface();
 };
