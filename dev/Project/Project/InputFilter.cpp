@@ -46,7 +46,7 @@ double InputFilter::SafePositiveDouble(const char* prompt_message, const char* e
 
 		try {
 			size_t processed_characters = 0;
-			double combined_value = std::stoi(raw_input, &processed_characters);
+			double combined_value = std::stod(raw_input, &processed_characters);
 
 			if (processed_characters == raw_input.length() && combined_value > 0.0)
 			{
