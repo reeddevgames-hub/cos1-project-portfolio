@@ -2,54 +2,62 @@
 #include"ConsoleUtil.h"
 #include<iostream>
  
+void InputFilter::pause_execution()
+{
+	ConsoleUtil::WriteLine("Press Enter to continue...", Red);
+	std::string buffer;
+	std::getline(std::cin, buffer);
+}
+
 int InputFilter::SafeInteger(const char* prompt_message, const char* error_message)
 {
-	int validated_value;
+	std::string raw_input;
 
-	while(true)
+	while (true)
 	{
 		ConsoleUtil::Write(prompt_message, Cyan);
-		std::cin >> validated_value;
-		if (std::cin.fail())
-		{
-			std::cin.clear();
-			std::cin.ignore(1000, '\n');
+		std::getline(std::cin, raw_input);
 
-			ConsoleUtil::WriteLine(error_message, Red);
-			system("pause");
+		try {
+			size_t processed_characters = 0;
+			int value = std::stoi(raw_input, &processed_characters);
 
+			if (processed_characters == raw_input.length())
+			{
+				return value;
+			}
 		}
-		else
-		{
-			std::cin.ignore(1000, '\n');
-			return validated_value;
-		}
+		catch(const std::invalid_argument&){}
+		catch(const std::out_of_range&){}
+
+		ConsoleUtil::WriteLine(error_message, Red);
+		pause_execution();
 	}
 }
 
 double InputFilter::SafePositiveDouble(const char* prompt_message, const char* error_message)
 {
-	double validated_money;
+	std::string raw_input;
 
-	while(true)
+	while (true)
 	{
 		ConsoleUtil::Write(prompt_message, Cyan);
-		std::cin >> validated_money;
+		std::getline(std::cin, raw_input);
 
-		if (std::cin.fail() || validated_money <= 0.0)
-		{
-			std::cin.clear();
-			std::cin.ignore(1000, '\n');
+		try {
+			size_t processed_characters = 0;
+			int value = std::stoi(raw_input, &processed_characters);
 
-			ConsoleUtil::WriteLine(error_message, Red);
-			system("pause");
-
+			if (processed_characters == raw_input.length() && value > 0.0)
+			{
+				return value;
+			}
 		}
-		else
-		{
-			std::cin.ignore(1000, '\n');
-			return validated_money;
-		}
+		catch (const std::invalid_argument&) {}
+		catch (const std::out_of_range&) {}
+
+		ConsoleUtil::WriteLine(error_message, Red);
+		pause_execution();
 	}
 }
 
@@ -62,15 +70,11 @@ std::string InputFilter::SafeString(const char* prompt_message, const char* erro
 		ConsoleUtil::Write(prompt_message, Cyan);
 		std::getline(std::cin, validated_text);
 
-		if (validated_text.empty())
-		{
-			ConsoleUtil::WriteLine(error_message, Red);
-			system("pause");
-
-		}
-		else
+		if (!validated_text.empty())
 		{
 			return validated_text;
 		}
+			ConsoleUtil::WriteLine(error_message, Red);
+			pause_execution();
 	}
 }
