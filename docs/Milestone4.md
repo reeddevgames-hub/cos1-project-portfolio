@@ -12,5 +12,5 @@
 
 ## 🐛 Bug Fixes & Usability Updates
 * **Made It Run Everywhere**: I removed the Windows-only system("pause") command because it doesn't work on Macs or Linux. I replaced it with a private class function called pause_execution() so it works perfectly on any operating system.
-
+* **Main Menu Navigation Escape**: Added a cancellation fallback option across all core transaction screens (Deposit, Withdraw, Transfer, Sub-Account). Users can now type '0' at any active prompt to cancel the operation and return safely back to the main menu dashboard.
 
