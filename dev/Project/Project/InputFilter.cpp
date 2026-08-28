@@ -20,11 +20,11 @@ int InputFilter::SafeInteger(const char* prompt_message, const char* error_messa
 
 		try {
 			size_t processed_characters = 0;
-			int value = std::stoi(raw_input, &processed_characters);
+			int combined_value = std::stoi(raw_input, &processed_characters);
 
 			if (processed_characters == raw_input.length())
 			{
-				return value;
+				return combined_value;
 			}
 		}
 		catch(const std::invalid_argument&){}
@@ -46,11 +46,11 @@ double InputFilter::SafePositiveDouble(const char* prompt_message, const char* e
 
 		try {
 			size_t processed_characters = 0;
-			int value = std::stoi(raw_input, &processed_characters);
+			double combined_value = std::stoi(raw_input, &processed_characters);
 
-			if (processed_characters == raw_input.length() && value > 0.0)
+			if (processed_characters == raw_input.length() && combined_value > 0.0)
 			{
-				return value;
+				return combined_value;
 			}
 		}
 		catch (const std::invalid_argument&) {}
