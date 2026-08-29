@@ -2,75 +2,79 @@
 #include"ConsoleUtil.h"
 #include<iostream>
  
-int InputFilter::SafeInteger(const char* promptMessage, const char* errorMessage)
+void InputFilter::pause_execution()
 {
-	int validatedValue;
-
-	while(true)
-	{
-		ConsoleUtil::Write(promptMessage, Cyan);
-		std::cin >> validatedValue;
-		if (std::cin.fail())
-		{
-			std::cin.clear();
-			std::cin.ignore(1000, '\n');
-
-			ConsoleUtil::WriteLine(errorMessage, Red);
-			system("pause");
-
-		}
-		else
-		{
-			std::cin.ignore(1000, '\n');
-			return validatedValue;
-		}
-	}
+	ConsoleUtil::WriteLine("Press Enter to continue...", Red);
+	std::string buffer;
+	std::getline(std::cin, buffer);
 }
 
-double InputFilter::SafePositiveDouble(const char* promptMessage, const char* errorMessage)
+int InputFilter::SafeInteger(const char* prompt_message, const char* error_message)
 {
-	double validatedMoney;
-
-	while(true)
-	{
-		ConsoleUtil::Write(promptMessage, Cyan);
-		std::cin >> validatedMoney;
-
-		if (std::cin.fail() || validatedMoney <= 0.0)
-		{
-			std::cin.clear();
-			std::cin.ignore(1000, '\n');
-
-			ConsoleUtil::WriteLine(errorMessage, Red);
-			system("pause");
-
-		}
-		else
-		{
-			std::cin.ignore(1000, '\n');
-			return validatedMoney;
-		}
-	}
-}
-
-std::string InputFilter::SafeString(const char* promptMessage, const char* errorMessage)
-{
-	std::string validatedText;
+	std::string raw_input;
 
 	while (true)
 	{
-		ConsoleUtil::Write(promptMessage, Cyan);
-		std::getline(std::cin, validatedText);
+		ConsoleUtil::Write(prompt_message, Cyan);
+		std::getline(std::cin, raw_input);
 
-		if (validatedText.empty())
-		{
-			ConsoleUtil::WriteLine(errorMessage, Red);
-			system("pause");
+		try {
+			size_t processed_characters = 0;
+			int combined_value = std::stoi(raw_input, &processed_characters);
 
+			if (processed_characters == raw_input.length())
+			{
+				return combined_value;
+			}
 		}
-		else
+		catch(const std::invalid_argument&){}
+		catch(const std::out_of_range&){}
+
+		ConsoleUtil::WriteLine(error_message, Red);
+		pause_execution();
+	}
+}
+
+double InputFilter::SafePositiveDouble(const char* prompt_message, const char* error_message)
+{
+	std::string raw_input;
+
+	while (true)
+	{
+		ConsoleUtil::Write(prompt_message, Cyan);
+		std::getline(std::cin, raw_input);
+
+		try {
+			size_t processed_characters = 0;
+			double combined_value = std::stod(raw_input, &processed_characters);
+
+			if (processed_characters == raw_input.length() && combined_value >= 0.0)
+			{
+				return combined_value;
+			}
+		}
+		catch (const std::invalid_argument&) {}
+		catch (const std::out_of_range&) {}
+
+		ConsoleUtil::WriteLine(error_message, Red);
+		pause_execution();
+	}
+}
+
+std::string InputFilter::SafeString(const char* prompt_message, const char* error_message)
+{
+	std::string validated_text;
+
+	while (true)
+	{
+		ConsoleUtil::Write(prompt_message, Cyan);
+		std::getline(std::cin, validated_text);
+
+		if (!validated_text.empty())
 		{
-			return validatedText;
+			return validated_text;
 		}
+			ConsoleUtil::WriteLine(error_message, Red);
+			pause_execution();
 	}
 }

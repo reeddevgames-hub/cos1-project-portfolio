@@ -19,7 +19,7 @@ public:
 
 private:
 	bool is_running = true;
-	AccountManager& acc_reference;
+	AccountManager& account_manager_reference;
 	StorageManager storage_manager;
 
 	void DisplayMainMenu();
