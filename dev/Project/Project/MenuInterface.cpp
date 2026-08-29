@@ -245,9 +245,9 @@ void MenuInterface::Run()
 	while (!is_authenticated)
 	{
 		ConsoleUtil::WriteLine();
-		ConsoleUtil::WriteLine("===============================", Red);
-		ConsoleUtil::Write("== ", Red); ConsoleUtil::Write(" Welcome To Energy Bank! ", Cyan); ConsoleUtil::WriteLine(" ==", Red);
-		ConsoleUtil::WriteLine("===============================", Red);
+		ConsoleUtil::WriteLine("===============================================", Red);
+		ConsoleUtil::Write("========== ", Red); ConsoleUtil::Write(" Welcome To Energy Bank! ", Cyan); ConsoleUtil::WriteLine(" ==========", Red);
+		ConsoleUtil::WriteLine("===============================================", Red);
 		ConsoleUtil::WriteLine();
 		ConsoleUtil::WriteLine("== IF THIS IS YOUR FIRST TIME HERE, PLEASE CREATE AN ACCOUNT ==", Yellow);
 		ConsoleUtil::WriteLine("Please choose from the options below. ", Cyan); 
