@@ -63,4 +63,8 @@ Now that the main menu screen loops through the master registry and prints the a
 
 ### Week 4
 
-My final stand up...
+⚙️ Overview: This weeks accomplishments include. Wrapping up all core banking engine development. Successfully refactored the data validation pipeline to run on line-based string parsing instead of raw stream extractions, and confirmed that player database records save and load across separate application runs using binary File I/O serialization.  
+🛠️ Project Wrap-Up: I polished the user interface to maximize overall usability and navigation. Converted all local parameters and variables to standard snake_case layouts, and implemented a fallback loop shortcut that lets users type 0 at any active prompt to instantly cancel an action and return to the main dashboard.    
+🌵 Challenges: Fixed local file system lockups from IDE metadata. Solved the build block by wrapping the case in explicit curly braces {} to limit its local scope.    
+📚 Biggest Takeaway: Robert C. Martin's Clean Code methodologies. This helped the code both visually and logically come together in a cleaner viewpoint. 
+🔮 Future Development: Currently the banking system updates balances but does not record transaction history, so building a chronological transaction ledger that records the date, time, and type of transaction being made. I could also add a Bank statement Exporter using a .txt or .csv file to format the ledger history and export it based on which account is being used at the time the ledger is formed so that only that persons account information is being shown.
